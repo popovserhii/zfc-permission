@@ -1,0 +1,27 @@
+{
+  "name": "popov/zfc-permission",
+  "description": "ZF2 Extended Permission Module",
+  "type": "zf-module",
+  "license": "MIT",
+  "keywords": [
+    "zf2",
+    "permission",
+    "access"
+  ],
+  "authors": [
+    {
+      "name": "Serhii Popov",
+      "email": "popow.serhii@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=5.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Popov\\ZfcPermission\\": "src/"
+    }
+  }
+}
