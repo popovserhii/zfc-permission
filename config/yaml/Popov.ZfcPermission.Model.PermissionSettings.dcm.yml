@@ -1,0 +1,34 @@
+Popov\ZfcPermission\Model\PermissionSettings:
+  type: entity
+  repositoryClass: Popov\ZfcPermission\Model\Repository\PermissionSettingsRepository
+  table: permission_settings
+  fields:
+    id:
+      id: true
+      type: integer
+      generator:
+        strategy: AUTO
+      options:
+        unsigned: true
+    name:
+      type: string
+      length: 255
+    mnemo:
+      type: string
+      length: 50
+    entityId:
+      type: integer
+      nullable: true
+      options:
+        unsigned: true
+  manyToOne:
+    entity:
+      targetEntity: Popov\Entity\Model\Entity
+      inversedBy: permissionSettings
+      joinColumn:
+        name: entityId
+        referencedColumnName: id
+  oneToMany:
+      permissionSettingsPages:
+        targetEntity: Popov\ZfcPermission\Model\PermissionSettingsPages
+        mappedBy: permissionSettings

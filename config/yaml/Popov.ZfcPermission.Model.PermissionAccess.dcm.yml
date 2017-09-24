@@ -1,0 +1,28 @@
+Popov\ZfcPermission\Model\PermissionAccess:
+  type: entity
+  repositoryClass: Popov\ZfcPermission\Model\Repository\PermissionAccessRepository
+  table: permission_access
+  fields:
+    id:
+      id: true
+      type: integer
+      generator:
+        strategy: AUTO
+      options:
+        unsigned: true
+    permissionId:
+      type: integer
+      options:
+        unsigned: true
+    roleId:
+      type: string
+      length: 6
+    access:
+      type: integer
+  manyToOne:
+      permission:
+        targetEntity: Popov\ZfcPermission\Model\Permission
+        inversedBy: permissionAccess
+        joinColumn:
+          name: permissionId
+          referencedColumnName: id

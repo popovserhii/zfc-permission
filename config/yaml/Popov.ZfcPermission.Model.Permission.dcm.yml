@@ -1,0 +1,52 @@
+Popov\ZfcPermission\Model\Permission:
+  type: entity
+  repositoryClass: Popov\ZfcPermission\Model\Repository\PermissionRepository
+  table: permission
+  indexes:
+    entityId:
+      columns: [ entityId ]
+    module:
+      columns: [ module ]
+  fields:
+    id:
+      id: true
+      type: integer
+      generator:
+        strategy: AUTO
+      options:
+        unsigned: true
+    target:
+      type: string
+      length: 255
+    entityId:
+      type: integer
+      nullable: false
+      default: 0
+      options:
+        unsigned: true
+    type:
+      type: string
+      length: 50
+    module:
+      type: string
+      length: 100
+    parent:
+      type: integer
+      default: 0
+    typeField:
+      type: string
+      default: ''
+    required:
+      type: string
+      default: '0'
+  # manyToOne:
+  #  permissionPageBind:
+  #    targetEntity: Popov\ZfcPermission\Model\PermissionPageBind
+  #    inversedBy: permission
+  #    joinColumn:
+  #      name: entityId
+  #      referencedColumnName: id
+  oneToMany:
+    permissionAccess:
+      targetEntity: Popov\ZfcPermission\Model\PermissionAccess
+      mappedBy: permission

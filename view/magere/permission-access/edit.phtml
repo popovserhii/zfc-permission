@@ -1,0 +1,54 @@
+<?php
+/** @var \Popov\Roles\View\Helper\Roles $rolesHelper */
+$rolesHelper = $this->roles();
+
+/** @var \Popov\ZfcPermission\View\Helper\Permission $permissionHelper */
+$permissionHelper = $this->permission();
+
+$controller = 'permission-access';
+$action = 'edit';
+?>
+
+<form method="post" name="sendForm" action="<?=$this->url('default/id', [
+	'controller'	=> $controller,
+	'action'		=> $action,
+	'id'			=> $roleId
+])?>">
+	<table class="main-calculation-data width tableinput">
+		<tbody>
+		<tr>
+			<td>Доступ к ресурсу</td>
+			<td><select name="resource" onchange="$('#resource_access').toggle()"><?=$rolesHelper->resourceList($roleItem->getResource())?></select></td>
+		</tr>
+		</tbody>
+	</table>
+
+	<table class="CmsMainText table-content tableborder tableinput" id="resource_access" style="display: <?=($roleItem->getResource() == 'all') ? 'none' : 'block';?>;width: 383px;">
+		<thead>
+		<tr class="CmsHeader">
+			<td>Страницы</td>
+			<td>Read</td>
+			<td>Write</td>
+		</tr>
+		</thead>
+		<tbody>
+		<?=$permissionHelper->permissionTreeHtml($items)?>
+		</tbody>
+	</table>
+
+	<div class="button-place">
+		<?php
+		$buttonsArgs['save'] = [
+			'type'       => 'submit',
+			'attr'       => [
+				'class' => 'button',
+			],
+			'controller' => $controller,
+			'action'     => $action,
+		];
+
+		/** @var \Popov\Store\View\Helper\Buttons */
+		echo $this->buttons('saveItem', $buttonsArgs);
+		?>
+	</div>
+</form>

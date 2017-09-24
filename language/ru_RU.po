@@ -1,0 +1,1449 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: storage-geely-kz\n"
+"POT-Creation-Date: 2015-06-12 11:56+0200\n"
+"PO-Revision-Date: 2016-11-09 18:47+0200\n"
+"Last-Translator: \n"
+"Language-Team: Agere <support@agere.com.ua>\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Poedit-Basepath: E:/www/git/storage-geely-kz/module/Popov/Permission\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: translate\n"
+"X-Poedit-SearchPath-0: language\n"
+
+#: language/translate.phtml:5
+msgid "index"
+msgstr "Главная"
+
+#: language/translate.phtml:7
+msgid "index::index"
+msgstr "Главная"
+
+#: language/translate.phtml:9
+msgid "store"
+msgstr "Склад"
+
+#: language/translate.phtml:11
+msgid "store::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:13
+msgid "store::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:15
+msgid "store::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:17
+msgid "store::details"
+msgstr "Детали"
+
+#: language/translate.phtml:19
+msgid "store::update-price-list"
+msgstr "Раздел актуализировать цены"
+
+#: language/translate.phtml:21
+msgid "store::edit-price-list"
+msgstr "Редактировать в разделе актуализации цен"
+
+#: language/translate.phtml:23
+msgid "store::change-status"
+msgstr "Изменить статус"
+
+#: language/translate.phtml:25
+msgid "store::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:27
+msgid "car-model"
+msgstr "Модели"
+
+#: language/translate.phtml:29
+msgid "car-model::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:31
+msgid "car-model::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:33
+msgid "car-model::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:35
+msgid "car-model::change-select"
+msgstr "Выбор модели на страницах с селектом"
+
+#: language/translate.phtml:37
+msgid "car-model::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:39
+msgid "car-equipment"
+msgstr "Комплектации"
+
+#: language/translate.phtml:41
+msgid "car-equipment::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:43
+msgid "car-equipment::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:45
+msgid "car-equipment::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:47
+msgid "car-equipment::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:49
+msgid "brand"
+msgstr "Марки машин"
+
+#: language/translate.phtml:51
+msgid "brand::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:53
+msgid "brand::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:55
+msgid "brand::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:57
+msgid "brand::change-select"
+msgstr "Выбор марки машины на страницах с селектом"
+
+#: language/translate.phtml:59
+msgid "brand::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:61
+msgid "city"
+msgstr "Склады-продаж"
+
+#: language/translate.phtml:63
+msgid "city::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:65
+msgid "city::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:67
+msgid "city::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:69
+msgid "city::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:71
+msgid "users"
+msgstr "Пользователи"
+
+#: language/translate.phtml:73
+msgid "users::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:75
+msgid "users::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:77
+msgid "users::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:79
+msgid "users::login"
+msgstr "Вход в систему"
+
+#: language/translate.phtml:81
+msgid "users::logout"
+msgstr "Выход из системы"
+
+#: language/translate.phtml:83
+msgid "users::forgot-password"
+msgstr "Забыли пароль?"
+
+#: language/translate.phtml:85
+msgid "users::change-password"
+msgstr "Личные данные"
+
+#: language/translate.phtml:87
+msgid "users::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:89
+msgid "roles"
+msgstr "Роли"
+
+#: language/translate.phtml:91
+msgid "roles::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:93
+msgid "roles::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:95
+msgid "roles::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:97
+msgid "roles::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:99
+msgid "vidy-rassrochek"
+msgstr "Виды рассрочек"
+
+#: language/translate.phtml:101
+msgid "vidy-rassrochek::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:103
+msgid "vidy-rassrochek::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:105
+msgid "vidy-rassrochek::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:107
+msgid "vidy-rassrochek::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:109
+msgid "vidy-rassrochek::option"
+msgstr "Выбор рассрочки на страницах с селектом"
+
+#: language/translate.phtml:111
+msgid "vidy-kreditov"
+msgstr "Виды кредитов"
+
+#: language/translate.phtml:113
+msgid "vidy-kreditov::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:115
+msgid "vidy-kreditov::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:117
+msgid "vidy-kreditov::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:119
+msgid "vidy-kreditov::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:121
+msgid "vidy-kreditov::option"
+msgstr "Выбор кредита на страницах с селектом"
+
+#: language/translate.phtml:123
+msgid "car-action"
+msgstr "Акции"
+
+#: language/translate.phtml:125
+msgid "car-action::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:127
+msgid "car-action::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:129
+msgid "car-action::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:131
+msgid "car-action::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:133
+msgid "documents"
+msgstr "Приказы и распоряжения"
+
+#: language/translate.phtml:135
+msgid "documents::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:137
+msgid "documents::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:139
+msgid "documents::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:141
+msgid "documents::view"
+msgstr "Просмотр"
+
+#: language/translate.phtml:143
+msgid "documents::history"
+msgstr "История"
+
+#: language/translate.phtml:145
+msgid "documents::delete-file"
+msgstr "Удалить файл"
+
+#: language/translate.phtml:147
+msgid "documents::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:149
+msgid "permission"
+msgstr "Доступы"
+
+#: language/translate.phtml:151
+msgid "permission::update-urls"
+msgstr "Оновить перечень страниц для доступа к страницам"
+
+#: language/translate.phtml:153
+msgid "status"
+msgstr "Статусы"
+
+#: language/translate.phtml:155
+msgid "status::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:157
+msgid "status::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:159
+msgid "status::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:161
+msgid "status::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:163
+msgid "mail"
+msgstr "Письма"
+
+#: language/translate.phtml:165
+msgid "mail::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:167
+msgid "mail::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:169
+msgid "mail::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:171
+msgid "warranty"
+msgstr "Гарантия и сервис"
+
+#: language/translate.phtml:173
+msgid "warranty::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:175
+msgid "warranty::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:177
+msgid "warranty::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:179
+msgid "warranty::history"
+msgstr "История"
+
+#: language/translate.phtml:181
+msgid "warranty::correspondence"
+msgstr "Переписка"
+
+#: language/translate.phtml:183
+msgid "warranty::confirm-warranty"
+msgstr "Подтверждение гарантии"
+
+#: language/translate.phtml:185
+msgid "warranty::send-request"
+msgstr "Запрос на дополнительную информацию"
+
+#: language/translate.phtml:187
+msgid "warranty::reject-warranty"
+msgstr "Отклонить гарантийный случай"
+
+#: language/translate.phtml:189
+msgid "warranty::performed"
+msgstr "Выполнено работу"
+
+#: language/translate.phtml:191
+msgid "warranty::work-order-index"
+msgstr "Заказ-наряд Список"
+
+#: language/translate.phtml:193
+msgid "warranty::work-order-add"
+msgstr "Заказ-наряд Добавить"
+
+#: language/translate.phtml:195
+msgid "warranty::work-order-download"
+msgstr "Заказ-наряд Скачать"
+
+#: language/translate.phtml:197
+msgid "warranty::work-order-edit"
+msgstr "Заказ-наряд Редактировать"
+
+#: language/translate.phtml:199
+msgid "warranty::take-work"
+msgstr "Принято в работу"
+
+#: language/translate.phtml:201
+msgid "files"
+msgstr "Файлы"
+
+#: language/translate.phtml:203
+msgid "files::delete-file"
+msgstr "Удалить файл"
+
+#: language/translate.phtml:205
+msgid "logistics"
+msgstr "Логистика"
+
+#: language/translate.phtml:207
+msgid "logistics::application-taken-work"
+msgstr "Заявка взята в работу"
+
+#: language/translate.phtml:209
+msgid "logistics::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:211
+msgid "logistics::history"
+msgstr "История"
+
+#: language/translate.phtml:213
+msgid "logistics::order"
+msgstr "Приказ"
+
+#: language/translate.phtml:215
+msgid "logistics::order-download"
+msgstr "Скачать Приказ"
+
+#: language/translate.phtml:217
+msgid "logistics::confirm-application"
+msgstr "Подтверждение заявки"
+
+#: language/translate.phtml:219
+msgid "logistics::take-cars"
+msgstr "Принять авто"
+
+#: language/translate.phtml:221
+msgid "settings"
+msgstr "Настройки"
+
+#: language/translate.phtml:223
+msgid "settings::index"
+msgstr "Раздел настройки"
+
+#: language/translate.phtml:225
+msgid "category"
+msgstr "Категории"
+
+#: language/translate.phtml:227
+msgid "category::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:229
+msgid "category::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:231
+msgid "category::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:233
+msgid "logistics::add-stage"
+msgstr "Добавить перегон"
+
+#: language/translate.phtml:235
+msgid "logistics::add-car"
+msgstr "Добавить авто"
+
+#: language/translate.phtml:237
+msgid "car-subgroup"
+msgstr "Подгрупы авто"
+
+#: language/translate.phtml:239
+msgid "car-subgroup::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:241
+msgid "car-subgroup::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:243
+msgid "car-subgroup::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:245
+msgid "car-subgroup::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:247
+msgid "warranty::response-request"
+msgstr "Ответ на запрос дополнительной информации"
+
+#: language/translate.phtml:249
+msgid "logistics::application-rejected"
+msgstr "Заявка отклонена"
+
+#: language/translate.phtml:251
+msgid "category::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:253
+msgid "brand-setting"
+msgstr "Настройки склада"
+
+#: language/translate.phtml:255
+msgid "brand-setting::closed-period"
+msgstr "Закрыть период"
+
+#: language/translate.phtml:257
+msgid "vidy-lizinga"
+msgstr "Виды лизинга"
+
+#: language/translate.phtml:259
+msgid "vidy-lizinga::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:261
+msgid "vidy-lizinga::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:263
+msgid "vidy-lizinga::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:265
+msgid "vidy-lizinga::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:267
+msgid "vidy-lizinga::option"
+msgstr "Выбор лизинга на страницах с селектом"
+
+#: language/translate.phtml:269
+msgid "logistics::download"
+msgstr "Експорт по перегону авто"
+
+#: language/translate.phtml:271
+msgid "store::delete-items"
+msgstr "Удалить несколько авто"
+
+#: language/translate.phtml:273
+msgid "users::monitoring"
+msgstr "Мониторинг пользователей"
+
+#: language/translate.phtml:275
+msgid "logistics::history-one-car"
+msgstr "История одного авто"
+
+#: language/translate.phtml:277
+msgid "rod-zanyatiy-sfera-deyatelnosti"
+msgstr ""
+
+#: language/translate.phtml:279
+msgid "rod-zanyatiy-sfera-deyatelnosti::index"
+msgstr ""
+
+#: language/translate.phtml:281
+msgid "rod-zanyatiy-sfera-deyatelnosti::add"
+msgstr ""
+
+#: language/translate.phtml:283
+msgid "rod-zanyatiy-sfera-deyatelnosti::edit"
+msgstr ""
+
+#: language/translate.phtml:285
+msgid "rod-zanyatiy-sfera-deyatelnosti::delete"
+msgstr ""
+
+#: language/translate.phtml:287
+msgid "rod-zanyatiy-sfera-deyatelnosti::option"
+msgstr ""
+
+#: language/translate.phtml:289
+msgid "sfera-ispolzovaniya-avtomobilya"
+msgstr ""
+
+#: language/translate.phtml:291
+msgid "sfera-ispolzovaniya-avtomobilya::index"
+msgstr ""
+
+#: language/translate.phtml:293
+msgid "sfera-ispolzovaniya-avtomobilya::add"
+msgstr ""
+
+#: language/translate.phtml:295
+msgid "sfera-ispolzovaniya-avtomobilya::edit"
+msgstr ""
+
+#: language/translate.phtml:297
+msgid "sfera-ispolzovaniya-avtomobilya::delete"
+msgstr ""
+
+#: language/translate.phtml:299
+msgid "sfera-ispolzovaniya-avtomobilya::option"
+msgstr ""
+
+#: language/translate.phtml:301
+msgid "store::change-item"
+msgstr "Запись комментария при изменении статуса"
+
+#: language/translate.phtml:303
+msgid "warranty::download"
+msgstr "Експорт обращений"
+
+#: language/translate.phtml:305
+msgid "warranty::delete"
+msgstr "Удалить обращение"
+
+#: language/translate.phtml:307
+msgid "logistics::orders"
+msgstr "Вкладка заявки"
+
+#: language/translate.phtml:309
+msgid "logistics::delete"
+msgstr "Удалить заявку"
+
+#: language/translate.phtml:311
+msgid "store::control-sales"
+msgstr "Контроль продаж"
+
+#: language/translate.phtml:313
+msgid "store::control-car"
+msgstr "Контроль за антикором и предпродажкой"
+
+#: language/translate.phtml:315
+msgid "store::history"
+msgstr "История"
+
+#: language/translate.phtml:317
+msgid "store::dealer-discount"
+msgstr "Дилерская скидка"
+
+#: language/translate.phtml:319
+msgid "store::mail-history"
+msgstr "История по отправке писем"
+
+#: language/translate.phtml:321
+msgid "documents::mail-history"
+msgstr "История по отправке писем"
+
+#: language/translate.phtml:323
+msgid "warranty::mail-history"
+msgstr "История по отправке писем"
+
+#: language/translate.phtml:325
+msgid "logistics::mail-history"
+msgstr "История по отправке писем"
+
+#: language/translate.phtml:327
+msgid "supplier"
+msgstr "Поставщики"
+
+#: language/translate.phtml:329
+msgid "supplier::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:331
+msgid "supplier::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:333
+msgid "supplier::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:335
+msgid "supplier::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:337
+msgid "sphinx"
+msgstr "Sphinx"
+
+#: language/translate.phtml:339
+msgid "sphinx::indexer"
+msgstr "Индексация"
+
+#: language/translate.phtml:341
+msgid "buyers"
+msgstr "Покупатели"
+
+#: language/translate.phtml:343
+msgid "buyers::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:345
+msgid "buyers::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:347
+msgid "buyers::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:349
+msgid "buyers::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:351
+msgid "file-upload"
+msgstr "Загрузка файлов"
+
+#: language/translate.phtml:353
+msgid "file-upload::index"
+msgstr "Загрузка файлов"
+
+#: language/translate.phtml:355
+msgid "optional-equipment"
+msgstr "Дополнительное оборудование и аксессуары"
+
+#: language/translate.phtml:357
+msgid "optional-equipment::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:359
+msgid "optional-equipment::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:361
+msgid "optional-equipment::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:363
+msgid "optional-equipment::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:365
+msgid "store::optional-equipment"
+msgstr "Вкладка - Дополнительное оборудование и аксессуары"
+
+#: language/translate.phtml:367
+msgid "store::add-to-car-optional-equipment"
+msgstr "Прикрепить к автомобилю - Дополнительное оборудование и аксессуары"
+
+#: language/translate.phtml:369
+msgid "store::delete-optional-equipment"
+msgstr "Удалить с вкладки - Дополнительное оборудование и аксессуары"
+
+#: language/translate.phtml:371
+msgid "users::generate-passwords"
+msgstr "Сгенерировать пароли"
+
+#: language/translate.phtml:373
+msgid "vidy-oplat"
+msgstr "Виды оплат"
+
+#: language/translate.phtml:375
+msgid "vidy-oplat::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:377
+msgid "vidy-oplat::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:379
+msgid "vidy-oplat::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:381
+msgid "vidy-oplat::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:383
+msgid "vidy-oplat::option"
+msgstr "Выбор вида оплат на страницах с селектом"
+
+#: language/translate.phtml:385
+msgid "dealerships"
+msgstr "Дилерские центры"
+
+#: language/translate.phtml:387
+msgid "dealerships::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:389
+msgid "dealerships::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:391
+msgid "dealerships::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:393
+msgid "dealerships::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:395
+msgid "regions"
+msgstr "Области"
+
+#: language/translate.phtml:397
+msgid "regions::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:399
+msgid "regions::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:401
+msgid "regions::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:403
+msgid "regions::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:405
+msgid "buyers::details"
+msgstr "Детали"
+
+#: language/translate.phtml:407
+msgid "towns"
+msgstr "Города"
+
+#: language/translate.phtml:409
+msgid "towns::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:411
+msgid "towns::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:413
+msgid "towns::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:415
+msgid "towns::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:417
+msgid "regions::change-select"
+msgstr "Выбор области на страницах с селектом"
+
+#: language/translate.phtml:419
+msgid "store::filters-all"
+msgstr "Страница с фильтрами для Експорта всех брендов"
+
+#: language/translate.phtml:421
+msgid "store::import"
+msgstr "Импорт (загрузить файл)"
+
+#: language/translate.phtml:423
+msgid "store::export"
+msgstr "Експорт файла"
+
+#: language/translate.phtml:425
+msgid "store::export-all"
+msgstr "Експорт файла по всем брендам"
+
+#: language/translate.phtml:427
+msgid "car-assembly"
+msgstr "Сборка авто"
+
+#: language/translate.phtml:429
+msgid "car-assembly::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:431
+msgid "car-assembly::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:433
+msgid "car-assembly::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:435
+msgid "car-assembly::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:437
+msgid "order-sale"
+msgstr "Заказ-продажи"
+
+#: language/translate.phtml:439
+msgid "order-sale::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:441
+msgid "order-sale::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:443
+msgid "order-sale::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:445
+msgid "order-sale::payment"
+msgstr "Оплата"
+
+#: language/translate.phtml:447
+msgid "order-sale::documents"
+msgstr "Документы"
+
+#: language/translate.phtml:449
+msgid "order-sale::add-car"
+msgstr "Добавить авто"
+
+#: language/translate.phtml:451
+msgid "order-sale::issue-order-sale"
+msgstr "Выпустить заказ-продажу"
+
+#: language/translate.phtml:453
+msgid "order-sale::delete-order-sale-store"
+msgstr "Удалить авто с заказ-продажи"
+
+#: language/translate.phtml:455
+msgid "order-sale::history"
+msgstr "История"
+
+#: language/translate.phtml:457
+msgid "order-sale::delete-order-sale-paid"
+msgstr "Удалить оплату"
+
+#: language/translate.phtml:459
+msgid "order-sale::create-document"
+msgstr "Создать документ"
+
+#: language/translate.phtml:461
+msgid "order-sale::export"
+msgstr "Експорт файла"
+
+#: language/translate.phtml:463
+msgid "cron"
+msgstr "Cron"
+
+#: language/translate.phtml:465
+msgid "cron::cron"
+msgstr "Cron"
+
+#: language/translate.phtml:467
+msgid "reminder"
+msgstr "Напоминания"
+
+#: language/translate.phtml:469
+msgid "car-detail-defect"
+msgstr "Дефект"
+
+#: language/translate.phtml:471
+msgid "car-detail-defect::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:473
+msgid "car-detail-defect::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:475
+msgid "car-detail-defect::export"
+msgstr "Експорт файла"
+
+#: language/translate.phtml:477
+msgid "files::delete-created-file"
+msgstr "Удалить созданный файл"
+
+#: language/translate.phtml:479
+msgid "staff"
+msgstr "Наши сотрудники"
+
+#: language/translate.phtml:481
+msgid "staff::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:483
+msgid "staff::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:485
+msgid "department"
+msgstr "Отдел"
+
+#: language/translate.phtml:487
+msgid "department::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:489
+msgid "department::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:491
+msgid "department::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:493
+msgid "department::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:495
+msgid "order-sale::order-document"
+msgstr "Заказать Расходную накладную и Счет Фактуру"
+
+#: language/translate.phtml:497
+msgid "authorized-persons"
+msgstr "Уполномоченные лица"
+
+#: language/translate.phtml:499
+msgid "authorized-persons::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:501
+msgid "authorized-persons::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:503
+msgid "authorized-persons::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:505
+msgid "authorized-persons::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:507
+msgid "staff::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:509
+msgid "users::history"
+msgstr "История"
+
+#: language/translate.phtml:511
+msgid "job-titles"
+msgstr "Должности"
+
+#: language/translate.phtml:513
+msgid "job-titles::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:515
+msgid "job-titles::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:517
+msgid "job-titles::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:519
+msgid "job-titles::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:521
+msgid "clients"
+msgstr "CRM"
+
+#: language/translate.phtml:523
+msgid "clients::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:525
+msgid "clients::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:527
+msgid "clients::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:529
+msgid "clients::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:531
+msgid "clients::export"
+msgstr "Експорт"
+
+#: language/translate.phtml:533
+msgid "autocarts"
+msgstr "Автовозы"
+
+#: language/translate.phtml:535
+msgid "autocarts::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:537
+msgid "autocarts::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:539
+msgid "autocarts::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:541
+msgid "autocarts::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:543
+msgid "logistics::documents"
+msgstr "Документы"
+
+#: language/translate.phtml:545
+msgid "logistics::create-document"
+msgstr "Создать документ"
+
+#: language/translate.phtml:547
+msgid "clients::processed"
+msgstr "Обработано"
+
+#: language/translate.phtml:549
+msgid "store::refresh-price-list"
+msgstr "Обновить цены в разделе актуализации цен"
+
+#: language/translate.phtml:551
+msgid "customer-response"
+msgstr "Ответ клиента"
+
+#: language/translate.phtml:553
+msgid "customer-response::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:555
+msgid "customer-response::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:557
+msgid "customer-response::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:559
+msgid "customer-response::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:561
+msgid "call-center"
+msgstr "Колл центр"
+
+#: language/translate.phtml:563
+msgid "call-center::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:565
+msgid "call-center::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:567
+msgid "call-center::import"
+msgstr "Импорт"
+
+#: language/translate.phtml:569
+msgid "call-center::export"
+msgstr "Експорт"
+
+#: language/translate.phtml:571
+msgid "users::delete-file"
+msgstr "Удалить фото"
+
+#: language/translate.phtml:573
+msgid "staff::delete-file"
+msgstr "Удалить фото"
+
+#: language/translate.phtml:575
+msgid "call-center::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:577
+msgid "store::our-accessories"
+msgstr "Свое дополнительное оборудование"
+
+#: language/translate.phtml:579
+msgid "store::delete-our-accessories"
+msgstr "Удалить свое дополнительное оборудование"
+
+#: language/translate.phtml:581
+msgid "spares"
+msgstr "Запчасти"
+
+#: language/translate.phtml:583
+msgid "spares::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:585
+msgid "spares::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:587
+msgid "spares::import"
+msgstr "Импорт"
+
+#: language/translate.phtml:589
+msgid "shop-spares"
+msgstr "Магазин запчастей"
+
+#: language/translate.phtml:591
+msgid "shop-spares::index"
+msgstr "Список - таблица на главной (вкладка Магазин)"
+
+#: language/translate.phtml:593
+msgid "shop-spares::cart"
+msgstr "Корзина"
+
+#: language/translate.phtml:595
+msgid "shop-spares::add-car"
+msgstr "Добавить авто"
+
+#: language/translate.phtml:597
+msgid "shop-spares::orders"
+msgstr "Список - таблица на главной (вкладка Заявки)"
+
+#: language/translate.phtml:599
+msgid "shop-spares::export-orders"
+msgstr "Експорт"
+
+#: language/translate.phtml:601
+msgid "shop-spares::order-edit"
+msgstr "Редактирование заявки"
+
+#: language/translate.phtml:603
+msgid "shop-spares::export-bespeak-order"
+msgstr "Распечатать заказанную заявку"
+
+#: language/translate.phtml:605
+msgid "shop-spares::export-sending-order"
+msgstr "Распечатать отправленную заявку"
+
+#: language/translate.phtml:607
+msgid "shop-spares::export-accept-order"
+msgstr "Распечатать принятую заявку"
+
+#: language/translate.phtml:609
+msgid "shop-spares::order-history"
+msgstr "История заявки"
+
+#: language/translate.phtml:611
+msgid "shop-spares::order-mail-history"
+msgstr "История отправки писем заявки"
+
+#: language/translate.phtml:613
+msgid "shop-spares::take-work"
+msgstr "Принять в работу"
+
+#: language/translate.phtml:615
+msgid "shop-spares::confirm-application"
+msgstr "Подтвердить заявку"
+
+#: language/translate.phtml:617
+msgid "shop-spares::checkout-delivery"
+msgstr "Оформить доставку"
+
+#: language/translate.phtml:619
+msgid "shop-spares::take-order"
+msgstr "Принять заказ"
+
+#: language/translate.phtml:621
+msgid "cart"
+msgstr "Корзина"
+
+#: language/translate.phtml:623
+msgid "cart::add-to-cart"
+msgstr "Добавить в корзину"
+
+#: language/translate.phtml:625
+msgid "cart::remove-item"
+msgstr "Удалить с корзины"
+
+#: language/translate.phtml:627
+msgid "logistics::photos"
+msgstr "Вкладка Фотографии"
+
+#: language/translate.phtml:629
+msgid "logistics::download-one-archive"
+msgstr "Скачать одним архивом"
+
+#: language/translate.phtml:631
+msgid "shop-spares::delete-order"
+msgstr "Удалить заявку"
+
+#: language/translate.phtml:633
+msgid "promotional-products"
+msgstr "Рекламная продукция"
+
+#: language/translate.phtml:635
+msgid "promotional-products::index"
+msgstr "Список - таблица на главной"
+
+#: language/translate.phtml:637
+msgid "promotional-products::add"
+msgstr "Добавить"
+
+#: language/translate.phtml:639
+msgid "promotional-products::edit"
+msgstr "Редактировать"
+
+#: language/translate.phtml:641
+msgid "promotional-products::delete"
+msgstr "Удалить"
+
+#: language/translate.phtml:643
+msgid "shop-promotional-products"
+msgstr "Магазин рекламной продукции"
+
+#: language/translate.phtml:645
+msgid "shop-promotional-products::index"
+msgstr "Список - таблица на главной (вкладка Магазин)"
+
+#: language/translate.phtml:647
+msgid "shop-promotional-products::cart"
+msgstr "Корзина"
+
+#: language/translate.phtml:649
+msgid "shop-promotional-products::orders"
+msgstr "Список - таблица на главной (вкладка Заявки)"
+
+#: language/translate.phtml:651
+msgid "shop-promotional-products::export-orders"
+msgstr "Експорт"
+
+#: language/translate.phtml:653
+msgid "shop-promotional-products::order-edit"
+msgstr "Редактирование заявки"
+
+#: language/translate.phtml:655
+msgid "shop-promotional-products::order-history"
+msgstr "История заявки"
+
+#: language/translate.phtml:657
+msgid "shop-promotional-products::order-mail-history"
+msgstr "История отправки писем заявки"
+
+#: language/translate.phtml:659
+msgid "shop-promotional-products::take-work"
+msgstr "Принять в работу"
+
+#: language/translate.phtml:661
+msgid "shop-promotional-products::confirm-application"
+msgstr "Подтвердить заявку"
+
+#: language/translate.phtml:663
+msgid "shop-promotional-products::checkout-delivery"
+msgstr "Оформить доставку"
+
+#: language/translate.phtml:665
+msgid "shop-promotional-products::delete-order"
+msgstr "Удалить заявку"
+
+#: language/translate.phtml:667
+msgid "mon-fri"
+msgstr "Пн.-Пт."
+
+#: language/translate.phtml:669
+msgid "satur"
+msgstr "Сб."
+
+#: language/translate.phtml:671
+msgid "sun"
+msgstr "Вс."
+
+#: language/translate.phtml:673
+msgid "city::export"
+msgstr "Експорт"
+
+#: language/translate.phtml:675
+msgid "shop-promotional-products::download-file"
+msgstr "Скачать счет"
+
+#: language/translate.phtml:677
+msgid "vidy-oplat::option-persent"
+msgstr "Выбор вида оплат на страницах с селектом (Аванс)"
+
+#: language/translate.phtml:679
+msgid "vidy-rassrochek::option-persent"
+msgstr "Выбор рассрочки на страницах с селектом (Аванс)"
+
+#: language/translate.phtml:681
+msgid "vidy-kreditov::option-persent"
+msgstr "Выбор кредита на страницах с селектом (Аванс)"
+
+#: language/translate.phtml:683
+msgid "vidy-lizinga::option-persent"
+msgstr "Выбор лизинга на страницах с селектом (Аванс)"
+
+#: language/translate.phtml:685
+msgid "shop-promotional-products::application-rejected"
+msgstr "Отклонить заявку"
+
+#: language/translate.phtml:688
+msgid "type-autocarts"
+msgstr "Типы перевозки"
+
+#: language/translate.phtml:689
+msgid "type-autocarts::index"
+msgstr "Типы перевозки"
+
+#: language/translate.phtml:690
+msgid "type-autocarts::add"
+msgstr "Добавление типа перевозки"
+
+#: language/translate.phtml:691
+msgid "type-autocarts::edit"
+msgstr "Редактирование типа перевозки"
+
+#: language/translate.phtml:692
+msgid "type-autocarts::delete"
+msgstr "Удаление типа перевозки"
+
+#: language/translate.phtml:693
+msgid "autocarts-forwarder"
+msgstr "Єкспедитори"
+
+#: language/translate.phtml:694
+msgid "autocarts-forwarder::index"
+msgstr "Єкспедитори"
+
+#: language/translate.phtml:695
+msgid "autocarts-forwarder::add"
+msgstr "Добавление єкспедитора"
+
+#: language/translate.phtml:696
+msgid "autocarts-forwarder::edit"
+msgstr "Редактирование экспедитора"
+
+#: language/translate.phtml:697
+msgid "autocarts-forwarder::delete"
+msgstr "Удаление єкспедитора"
+
+#: language/translate.phtml:699
+msgid "shop-spares::warranty"
+msgstr "Гарантии"
+
+#: language/translate.phtml:700
+msgid "soft-loans::index"
+msgstr "Льготное кредитование"
+
+#: language/translate.phtml:701
+msgid "soft-loans::create"
+msgstr "Добавление заявки ЛК"
+
+#: language/translate.phtml:702
+msgid "soft-loans::edit"
+msgstr "Редактирование заявки ЛК"
+
+#: language/translate.phtml:703
+msgid "soft-loans::delete"
+msgstr "Удаление заявки ЛК"
+
+#: language/translate.phtml:704
+msgid "soft-loans::export"
+msgstr "Экспорт"
+
+#: language/translate.phtml:704
+msgid "store::import-refresh"
+msgstr "Обновить склад"

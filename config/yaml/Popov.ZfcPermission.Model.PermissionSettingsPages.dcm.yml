@@ -1,0 +1,37 @@
+Popov\ZfcPermission\Model\PermissionSettingsPages:
+  type: entity
+  repositoryClass: Popov\ZfcPermission\Model\Repository\PermissionSettingsPagesRepository
+  table: permission_settings_pages
+  fields:
+    id:
+      id: true
+      type: integer
+      generator:
+        strategy: AUTO
+      options:
+        unsigned: true
+    permissionSettingsId:
+      type: integer
+      options:
+        unsigned: true
+    pagesId:
+      type: integer
+      options:
+        unsigned: true
+  manyToOne:
+      permissionSettings:
+        targetEntity: Popov\ZfcPermission\Model\PermissionSettings
+        inversedBy: permissionSettingsPages
+        joinColumn:
+          name: permissionSettingsId
+          referencedColumnName: id
+      pages:
+        targetEntity: Popov\Fields\Model\Pages
+        inversedBy: permissionSettingsPages
+        joinColumn:
+          name: pagesId
+          referencedColumnName: id
+  oneToMany:
+      permissionPageBind:
+        targetEntity: Popov\ZfcPermission\Model\PermissionPageBind
+        mappedBy: permissionSettingsPages
