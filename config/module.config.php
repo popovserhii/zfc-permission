@@ -3,6 +3,8 @@ namespace Popov\ZfcPermission;
 
 return [
 
+    'acl' => require __DIR__ . '/acl.config.php',
+
     'console' => [
         'router' => [
             'routes' => [
@@ -34,7 +36,6 @@ return [
     ],
 
     'translator' => [
-        'locale' => 'en_US',
         'translation_file_patterns' => [
             [
                 'type' => 'gettext',
@@ -45,13 +46,22 @@ return [
         ],
     ],
 
+    // mvc
     'view_manager' => [
         'template_path_stack' => [
             __DIR__ . '/../view',
         ],
     ],
 
-    'service_manager' => [
+    // middleware
+    'templates' => [
+        'paths' => [
+            'admin-permission'  => [__DIR__ . '/../view/admin/permission'],
+            //'layout' => [__DIR__ . '/../view/layout'],
+        ],
+    ],
+
+    'dependencies' => [
         'aliases' => [
             'PermissionService' => Service\PermissionService::class,
             'PermissionAccessService' => Service\PermissionAccessService::class,
@@ -59,6 +69,7 @@ return [
             'PermissionSettingsPagesService' => Service\PermissionSettingsPagesService::class,
         ],
         'factories' => [
+            PermissionHelper::class => Factory\PermissionHelperFactory::class,
             Service\PermissionService::class => Service\Factory\PermissionServiceFactory::class,
             Service\PermissionAccessService::class => Service\Factory\PermissionAccessServiceFactory::class,
             Service\PermissionPageBindService::class => Service\Factory\PermissionPageBindServiceFactory::class,

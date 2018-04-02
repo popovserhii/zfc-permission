@@ -4,6 +4,7 @@ namespace Popov\ZfcPermission\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Popov\ZfcCore\Model\DomainAwareTrait;
+use Popov\ZfcEntity\Model\Entity;
 
 /**
  * PermissionSettings
@@ -39,7 +40,7 @@ class PermissionSettings {
     private $permissionSettingsPages;
 
     /**
-     * @var \Popov\Entity\Model\Entity
+     * @var Entity
      */
     private $entity;
 
@@ -168,10 +169,10 @@ class PermissionSettings {
     /**
      * Set entity
      *
-     * @param \Popov\Entity\Model\Entity $entity
+     * @param Entity $entity
      * @return PermissionSettings
      */
-    public function setEntity(\Popov\Entity\Model\Entity $entity = null)
+    public function setEntity(Entity $entity = null)
     {
         $this->entity = $entity;
 
@@ -181,7 +182,7 @@ class PermissionSettings {
     /**
      * Get entity
      *
-     * @return \Popov\Entity\Model\Entity
+     * @return Entity
      */
     public function getEntity()
     {
