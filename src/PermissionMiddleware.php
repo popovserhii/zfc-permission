@@ -20,12 +20,13 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Diactoros\Response\RedirectResponse;
+use Zend\Expressive\Helper\UrlHelper;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\View\Model\ViewModel;
 
 class PermissionMiddleware implements MiddlewareInterface
 {
-
     /**
      * @var PermissionHelper
      */
@@ -37,6 +38,11 @@ class PermissionMiddleware implements MiddlewareInterface
     protected $renderer;
 
     /**
+     * @var UrlHelper
+     */
+    protected $urlHelper;
+
+    /**
      * @var array
      */
     protected $config;
@@ -44,27 +50,30 @@ class PermissionMiddleware implements MiddlewareInterface
     public function __construct(
         PermissionHelper $permissionHelper,
         TemplateRendererInterface $renderer,
+        UrlHelper $urlHelper,
         array $config = null
-    )
-    {
+    ) {
         $this->permissionHelper = $permissionHelper;
         $this->renderer = $renderer;
+        $this->urlHelper = $urlHelper;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $this->permissionHelper->init();
 
-        if (!$this->permissionHelper->checkPermission()) {
-            //$view = (new ViewModel())->setTemplate('admin-permission::denied');
-            //return $handler->handle($request->withAttribute(ViewModel::class, $view));
+        $isDenied = $this->permissionHelper->checkPermission();
 
-            $content = $this->renderer->render('admin-permission::denied');
-
-            return new HtmlResponse($content);
+        if ($redirect = $this->permissionHelper->getRedirect()) {
+            return new RedirectResponse($this->urlHelper->generate($redirect['route'], $redirect['params']));
+        } elseif ($isDenied) {
+            //$view = (new ViewModel(['layout' => 'layout::admin']))
+            //    ->setTemplate('admin-permission::denied');
+            return new HtmlResponse($this->renderer->render('admin-permission::denied', [
+                'layout' => 'layout::admin'
+            ]));
         }
 
         return $handler->handle($request);
-
     }
 }

@@ -3,7 +3,9 @@
 namespace Popov\ZfcPermission\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 use Popov\ZfcCore\Model\DomainAwareTrait;
+use Popov\ZfcFields\Model\Pages;
 
 /**
  * PermissionSettingsPages
@@ -28,17 +30,17 @@ class PermissionSettingsPages
     private $pagesId;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      */
     private $permissionPageBind;
 
     /**
-     * @var \Popov\ZfcPermission\Model\PermissionSettings
+     * @var PermissionSettings
      */
     private $permissionSettings;
 
     /**
-     * @var \Popov\Fields\Model\Pages
+     * @var Pages
      */
     private $pages;
 
@@ -53,7 +55,7 @@ class PermissionSettingsPages
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -76,7 +78,7 @@ class PermissionSettingsPages
     /**
      * Get permissionSettingsId
      *
-     * @return integer 
+     * @return integer
      */
     public function getPermissionSettingsId()
     {
@@ -99,7 +101,7 @@ class PermissionSettingsPages
     /**
      * Get pagesId
      *
-     * @return integer 
+     * @return integer
      */
     public function getPagesId()
     {
@@ -108,12 +110,11 @@ class PermissionSettingsPages
 
     /**
      * Add permissionPageBind
-
      *
-*@param \Popov\ZfcPermission\Model\PermissionPageBind $permissionPageBind
+     * @param PermissionPageBind $permissionPageBind
      * @return PermissionSettingsPages
      */
-    public function addPermissionPageBind(\Popov\ZfcPermission\Model\PermissionPageBind $permissionPageBind)
+    public function addPermissionPageBind(PermissionPageBind $permissionPageBind)
     {
         $this->permissionPageBind[] = $permissionPageBind;
 
@@ -122,11 +123,10 @@ class PermissionSettingsPages
 
     /**
      * Remove permissionPageBind
-
      *
-*@param \Popov\ZfcPermission\Model\PermissionPageBind $permissionPageBind
+     * @param PermissionPageBind $permissionPageBind
      */
-    public function removePermissionPageBind(\Popov\ZfcPermission\Model\PermissionPageBind $permissionPageBind)
+    public function removePermissionPageBind(PermissionPageBind $permissionPageBind)
     {
         $this->permissionPageBind->removeElement($permissionPageBind);
     }
@@ -134,7 +134,7 @@ class PermissionSettingsPages
     /**
      * Get permissionPageBind
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getPermissionPageBind()
     {
@@ -143,12 +143,11 @@ class PermissionSettingsPages
 
     /**
      * Set permissionSettings
-
      *
-*@param \Popov\ZfcPermission\Model\PermissionSettings $permissionSettings
+     * @param PermissionSettings $permissionSettings
      * @return PermissionSettingsPages
      */
-    public function setPermissionSettings(\Popov\ZfcPermission\Model\PermissionSettings $permissionSettings = null)
+    public function setPermissionSettings(PermissionSettings $permissionSettings = null)
     {
         $this->permissionSettings = $permissionSettings;
 
@@ -157,9 +156,8 @@ class PermissionSettingsPages
 
     /**
      * Get permissionSettings
-
      *
-*@return \Popov\ZfcPermission\Model\PermissionSettings
+     * @return PermissionSettings
      */
     public function getPermissionSettings()
     {
@@ -169,10 +167,10 @@ class PermissionSettingsPages
     /**
      * Set pages
      *
-     * @param \Popov\Fields\Model\Pages $pages
+     * @param Pages $pages
      * @return PermissionSettingsPages
      */
-    public function setPages(\Popov\Fields\Model\Pages $pages = null)
+    public function setPages(Pages $pages = null)
     {
         $this->pages = $pages;
 
@@ -182,7 +180,7 @@ class PermissionSettingsPages
     /**
      * Get pages
      *
-     * @return \Popov\Fields\Model\Pages
+     * @return Pages
      */
     public function getPages()
     {

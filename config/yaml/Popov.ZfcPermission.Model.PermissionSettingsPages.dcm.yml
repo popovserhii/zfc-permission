@@ -26,7 +26,7 @@ Popov\ZfcPermission\Model\PermissionSettingsPages:
           name: permissionSettingsId
           referencedColumnName: id
       pages:
-        targetEntity: Popov\Fields\Model\Pages
+        targetEntity: Popov\ZfcFields\Model\Pages
         inversedBy: permissionSettingsPages
         joinColumn:
           name: pagesId

@@ -23,7 +23,7 @@ Popov\ZfcPermission\Model\PermissionSettings:
         unsigned: true
   manyToOne:
     entity:
-      targetEntity: Popov\Entity\Model\Entity
+      targetEntity: Popov\ZfcEntity\Model\Entity
       inversedBy: permissionSettings
       joinColumn:
         name: entityId

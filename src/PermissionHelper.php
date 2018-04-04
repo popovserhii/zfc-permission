@@ -44,13 +44,20 @@ class PermissionHelper
 {
     use ConfigAwareTrait;
 
-    protected $permissionDenied = false;
+    protected $permissionDenied = true;
+
+    /**
+     * Redirect params
+     *
+     * @var array
+     */
+    protected $redirect = [];
 
     /** @var AuthenticationService */
     protected $authService;
 
     /** @var Request */
-    protected $request;
+    //protected $request;
 
     /** @var AuthPlugin */
     protected $_userAuth = null;
@@ -115,12 +122,12 @@ class PermissionHelper
         return $this->request;
     }
 
-    public function setUsePermission($usePermission)
+    /*public function setUsePermission($usePermission)
     {
         $this->usePermission = $usePermission;
 
         return $this;
-    }
+    }*/
 
     /**
      * Sets Authentication Plugin
@@ -201,6 +208,11 @@ class PermissionHelper
     public function getDbAdapter()
     {
         return $this->adapter;
+    }
+
+    public function getRedirect()
+    {
+        return $this->redirect;
     }
 
 
@@ -329,8 +341,10 @@ class PermissionHelper
         $accessTotal = Acl::getAccessTotal();
 
         $userPlugin = $this->getAuthService();
+        $user = ($userPlugin->hasIdentity() && ($user = $userPlugin->getIdentity())) ? $user : false;
+
         /** @var UserPlugin $userPlugin */
-        if (($userPlugin->hasIdentity()) && ($user = $userPlugin->getIdentity()) && $user->getId()) {
+        if ($user && $user->getId()/* && $user->getIsInner()*/) {
             $roleMnemos = [];
             foreach ($user->getRoles() as $role) {
                 $roleMnemos[] = $role->getMnemo();
@@ -370,18 +384,19 @@ class PermissionHelper
             }
 
             if (in_array(true, $allowed)) {
-                $routeName = 'default';
-                $dataUrl = [
+                $routeName = 'admin/default';
+                $params = [
                     'resource' => $_SESSION['location']['resource'],
                     'action' => $_SESSION['location']['action'],
                 ];
                 if (isset($_SESSION['location']['id'])) {
-                    $routeName = 'default/id';
-                    $dataUrl['id'] = $_SESSION['location']['id'];
+                    //$routeName = 'default/id';
+                    $routeName = 'admin/default';
+                    $params['id'] = $_SESSION['location']['id'];
                 }
                 //$url = $this->urlHelper->generate($dataUrl, ['name' => $routeName]);
                 //$url = $this->urlHelper->generate($routeName, $dataUrl);
-                $url = ['name' => $routeName, 'params' => $dataUrl];
+                $url = ['route' => $routeName, 'params' => $params];
 
 
                 /*$response = $event->getResponse();
@@ -391,9 +406,10 @@ class PermissionHelper
                 unset($_SESSION['location']);
                 exit;*/
 
+                unset($_SESSION['location']);
                 $this->redirect = $url;
 
-                return true;
+                return;
             }
         }
 
@@ -418,13 +434,13 @@ class PermissionHelper
         if ($this->acl->hasAccessByRoles($roleMnemos, $target)
             || $this->acl->hasAccessByRoles($roleMnemos, $targetFull)
         ) {
+            $this->permissionDenied = false;
             return;
         }
 
-        if ($userPlugin->hasIdentity()) {
+        if ($user/* && $user->getIsInner()*/) {
             //$event->stopPropagation(true); // very important string
             //$viewModel->permissionDenied = false;
-            $this->permissionDenied = true;
 
             return;
         } else {
@@ -519,8 +535,8 @@ SQL;
                     $resultAccess = $dbAdapter->query($sql, $dbAdapter::QUERY_MODE_EXECUTE);
                     // Access to page
 
-                    if (!$resultAccess->count()) {
-                        $this->permissionDenied = true;
+                    if ($resultAccess->count()) {
+                        $this->permissionDenied = false;
                         //return false;
                     }
                 }
@@ -602,6 +618,4 @@ SQL;
 
 		return $resultRolesArray;
 	}
-
-
 }
