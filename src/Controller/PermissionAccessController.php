@@ -1,27 +1,39 @@
 <?php
 namespace Popov\ZfcPermission\Controller;
 
+use Popov\ZfcPermission\Service\PermissionAccessService;
 use Zend\Mvc\Controller\AbstractActionController,
 	Zend\View\Model\ViewModel,
-	Popov\Agere\String\StringUtils as AgereString;
+	Popov\Popov\String\StringUtils as AgereString;
+use Popov\ZfcPermission\PermissionHelper;
 
 class PermissionAccessController extends AbstractActionController {
 
 	public $serviceName = 'PermissionAccessService';
 
+    /**
+     * @var PermissionAccessService
+     */
+	protected $permissionAccessService;
 
-	/**
-	 * @param \Zend\ServiceManager\ServiceManager $sm
-	 * @param null|\Zend\Http\Request $request
+	public function __construct(PermissionAccessService $permissionAccessService)
+    {
+        $this->permissionAccessService = $permissionAccessService;
+    }
+
+    /**
+	 * @param array $request
 	 * @param int $roleId
 	 * @return array
 	 */
-	public function edit($sm, $request, $roleId) {
+	public function edit($post, $roleId) {
 		/** @var \Popov\ZfcPermission\Service\PermissionAccessService $service */
-		$service = $sm->get($this->serviceName);
+		$service = $this->permissionAccessService;
 
 		// Used roleId with possible user, role, group
-		$permissionAccessRoleId = AgereString::getStringAssocDigit($roleId, 'role');
+
+        $permissionAccessRoleId = PermissionHelper::getStringAssocDigit($roleId, 'role');
+		//$permissionAccessRoleId = AgereString::getStringAssocDigit($roleId, 'role');
 
 		// Table permission_access
 		$itemsAction = $service->getItemsByField($permissionAccessRoleId, 'roleId', 0, true);
@@ -44,8 +56,7 @@ class PermissionAccessController extends AbstractActionController {
 		/** @var \Popov\ZfcPermission\Model\PermissionAccess[] $itemsSettings */
 		$itemsSettings = $service->getItems($condition, 'permissionId');
 
-		if ($request) {
-			$post = $request->getPost()->toArray();
+		if ($post) {
 
 			// Table permission_access accessAction
 			$saveData = $this->_prepareSave('accessAction', $post, $permissionAccessRoleId);

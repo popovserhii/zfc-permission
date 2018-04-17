@@ -3,8 +3,8 @@ namespace Popov\ZfcPermission\View\Helper;
 
 use Zend\View\Helper\AbstractHelper,
 	Zend\Mvc\Router\Http\RouteMatch,
-	Popov\Agere\String\StringUtils as AgereString,
-	Popov\Agere\ArrayCustom\ArrayCustom,
+	Popov\Popov\String\StringUtils as AgereString,
+	Popov\Popov\ArrayCustom\ArrayCustom,
 	Popov\Users\Acl\Acl;
 
 class PermissionFields extends AbstractHelper {

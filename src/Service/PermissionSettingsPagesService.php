@@ -1,8 +1,8 @@
 <?php
 namespace Popov\ZfcPermission\Service;
 
-use Agere\Core\Service\DomainServiceAbstract;
-use Agere\Simpler\Plugin\SimplerPlugin;
+use Popov\Simpler\SimplerHelper;
+use Popov\ZfcCore\Service\DomainServiceAbstract;
 use Popov\ZfcPermission\Model\PermissionSettingsPages;
 use \Popov\ZfcPermission\Model\Repository\PermissionSettingsPagesRepository;
 
@@ -13,7 +13,7 @@ class PermissionSettingsPagesService extends DomainServiceAbstract
 {
     protected $entity = PermissionSettingsPages::class;
 
-    /** @var SimplerPlugin */
+    /** @var SimplerHelper */
     protected $simplerPlugin;
 
     /**
@@ -21,7 +21,7 @@ class PermissionSettingsPagesService extends DomainServiceAbstract
      */
     protected $permissionPageBindService;
 
-    public function __construct(SimplerPlugin $simplerPlugin, PermissionPageBindService $permissionPageBindService)
+    public function __construct(SimplerHelper $simplerPlugin, PermissionPageBindService $permissionPageBindService)
     {
         $this->simplerPlugin = $simplerPlugin;
         $this->permissionPageBindService = $permissionPageBindService;

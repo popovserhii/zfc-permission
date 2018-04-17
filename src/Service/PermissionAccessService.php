@@ -1,12 +1,13 @@
 <?php
 namespace Popov\ZfcPermission\Service;
 
-use Popov\Users\Acl\Acl;
+use Popov\Simpler\SimplerHelper;
+use Popov\ZFcUser\Acl\Acl;
 use \Popov\ZfcPermission\Model\Permission;
 use Popov\ZfcPermission\Model\PermissionAccess;
 use Popov\ZfcPermission\Model\Repository\PermissionAccessRepository;
-use Agere\Core\Service\DomainServiceAbstract;
-use Agere\Simpler\Plugin\SimplerPlugin;
+use Popov\ZfcCore\Service\DomainServiceAbstract;
+use Popov\Simpler\Plugin\SimplerPlugin;
 
 /**
  * @method PermissionAccessRepository getRepository()
@@ -18,7 +19,7 @@ class PermissionAccessService extends DomainServiceAbstract
     /** @var SimplerPlugin */
     protected $simplerPlugin;
 
-    public function __construct(SimplerPlugin $simplerPlugin)
+    public function __construct(SimplerHelper $simplerPlugin)
     {
         $this->simplerPlugin = $simplerPlugin;
     }
@@ -221,18 +222,18 @@ class PermissionAccessService extends DomainServiceAbstract
                     $items[$key]->setPermissionId($key);
                     $items[$key]->setRoleId($data['roleId']);
                     $items[$key]->setAccess($val);
-                    $repository->addItem($items[$key]);
+                    $om->persist($items[$key]);
                     unset($items[$key]);
                 }
             }
             if ($addItems) {
-                $repository->saveData();
+                $om->flush();
             }
             if ($items) {
                 foreach ($items as $item) {
-                    $repository->addRemove($item);
+                    $om->remove($item);
                 }
-                $repository->saveData();
+                $om->flush();
             }
         }
     }

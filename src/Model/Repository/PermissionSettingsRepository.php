@@ -2,8 +2,9 @@
 namespace Popov\ZfcPermission\Model\Repository;
 
 use Doctrine\ORM\Query\ResultSetMapping,
-	Doctrine\ORM\Query\ResultSetMappingBuilder,
-	Popov\Agere\ORM\EntityRepository;
+	Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Popov\ZfcCore\Service\EntityRepository;
+
 
 class PermissionSettingsRepository extends EntityRepository {
 

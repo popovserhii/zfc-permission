@@ -2,7 +2,7 @@
 /**
  * Authentication Factory
  *
- * @category Agere
+ * @category Popov
  * @package Agere_User
  * @author Serhii Popov <popow.serhii@gmail.com>
  * @datetime: 12.03.2016 1:44

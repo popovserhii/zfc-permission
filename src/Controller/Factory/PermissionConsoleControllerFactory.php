@@ -1,6 +1,6 @@
 <?php
 /**
- * @category Agere
+ * @category Popov
  * @package Agere_Permission
  * @author Sergiy Popov <popov@agere.com.ua>
  * @datetime: 22.12.2016 0:06

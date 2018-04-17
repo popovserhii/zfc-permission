@@ -1,24 +1,26 @@
 <?php
 namespace Popov\ZfcPermission\Service;
 
+use Popov\ZfcFields\Service\FieldsPagesService;
+use Popov\ZfcRole\Service\RoleService;
 use Zend\Server\Reflection;
+use Zend\Filter\Word\SeparatorToCamelCase;
 use Zend\Stdlib\Exception\InvalidArgumentException;
 use Zend\Mvc\Controller\AbstractController;
 use Doctrine\ORM\EntityRepository;
-use Popov\Agere\Service\AbstractEntityService;
+use Popov\Popov\Service\AbstractEntityService;
 use Popov\Reflection\Service\ReflectionService;
 use Popov\Logs\Event\Logs as LogsEvent;
-use Popov\Users\Model\Users as User;
-use Popov\Roles\Model\Roles as Role;
-use Popov\Entity\Model\Entity;
-use Popov\Entity\Controller\Plugin\ModulePlugin;
-use Agere\Simpler\Plugin\SimplerPlugin;
-use Popov\Fields\Model\FieldsPages as FieldPage;
+use Popov\ZfcUser\Model\User;
+use Popov\ZfcRole\Model\Role;
+use Popov\ZfcEntity\Model\Entity;
+use Popov\ZfcFields\Model\FieldsPages as FieldPage;
 use Popov\ZfcPermission\Model\Permission;
 use Popov\ZfcPermission\Model\Repository\PermissionRepository;
 use Popov\ZfcPermission\Service\PermissionAccessService;
-use Agere\Core\Service\DomainServiceAbstract;
-use Zend\Filter\Word\SeparatorToCamelCase;
+use Popov\ZfcCore\Service\DomainServiceAbstract;
+use Popov\Simpler\SimplerHelper;
+use Popov\ZfcEntity\Helper\ModuleHelper;
 
 /**
  * @method PermissionRepository getRepository()
@@ -30,20 +32,40 @@ class PermissionService extends DomainServiceAbstract
     /** @var PermissionAccessService */
     protected $permissionAccessService;
 
-    /** @var ModulePlugin */
+    /** @var ModuleHelper */
     protected $modulePlugin;
 
-    /** @var SimplerPlugin */
-    protected $simplerPlugin;
+    /** @var SimplerHelper */
+    protected $simplerHelper;
+
+    /** @var PermissionSettingsPagesService */
+    protected $permissionSettingsPagesService;
+
+    /** @var PermissionPageBindService  */
+    protected $permissionPageBindService;
+
+    /** @var RoleService */
+    protected $roleService;
+
+
+    protected $fieldsPagesService;
 
     public function __construct(
-        SimplerPlugin $simplerPlugin,
-        ModulePlugin $modulePlugin,
-        PermissionAccessService $permissionAccessService
+        SimplerHelper $simplerHelper,
+        ModuleHelper $moduleHelper,
+        PermissionAccessService $permissionAccessService,
+        PermissionSettingsPagesService $permissionSettingsPagesService,
+        PermissionPageBindService $permissionPageBindService,
+        RoleService $roleService,
+        FieldsPagesService $fieldsPagesService
     ) {
+        $this->modulePlugin = $moduleHelper;
+        $this->simplerHelper = $simplerHelper;
         $this->permissionAccessService = $permissionAccessService;
-        $this->modulePlugin = $modulePlugin;
-        $this->simplerPlugin = $simplerPlugin;
+        $this->permissionSettingsPagesService = $permissionSettingsPagesService;
+        $this->permissionPageBindService = $permissionPageBindService;
+        $this->roleService = $roleService;
+        $this->fieldsPagesService = $fieldsPagesService;
     }
 
     public function getModulePlugin()
@@ -53,7 +75,7 @@ class PermissionService extends DomainServiceAbstract
 
     public function getSimpler()
     {
-        return $this->simplerPlugin;
+        return $this->simplerHelper;
     }
 
     public function getPermissionAccessService()
@@ -229,7 +251,7 @@ class PermissionService extends DomainServiceAbstract
      * @param $config
      * @return array
      */
-    public function run($config)
+    public function runMvc($config)
     {
         $translate = [];
         $excludePages = ['files/get'];
@@ -276,6 +298,164 @@ class PermissionService extends DomainServiceAbstract
         }
 
         return $translate;
+    }
+
+    public function runMiddleware($config)
+    {
+        $translate = [];
+        $excludePages = [];
+        $om = $this->getObjectManager();
+        $repository = $this->getRepository();
+        //$reflection = new ReflectionService();
+        $simplerPlugin = $this->getSimpler();
+        $items = $this->getItemsCollection('action', 0);
+        $items = $simplerPlugin->setContext($items)->asAssociate('target');
+        foreach ($config as $key => $namespace) {
+            $configProviderClass = $namespace . '\\ConfigProvider';
+            if (!class_exists($configProviderClass)) {
+                continue;
+            }
+
+            $reflector = new \ReflectionClass($configProviderClass);
+            $fn = $reflector->getFileName();
+            $moduleDir = dirname($fn);
+
+            $path = $moduleDir . '/Action/Admin';
+            $dir = new \DirectoryIterator($path);
+            foreach ($dir as $fileInfo) {
+                if (!$fileInfo->isDir() && !$fileInfo->isDot()) {
+                    //echo $fileinfo->getFilename().'<br>';
+
+
+                    $baseName = $fileInfo->getBasename('.php');
+                    $actionClass = $namespace . '\\Action\\Admin\\' . $baseName;
+                    $class = Reflection::reflectClass($actionClass);
+                    //$methods = $class->getMethods();
+                    //foreach ($methods as $method) {
+                        $filename = $fileInfo->getFilename();
+                        if (strpos($filename, 'Action')) {
+                            //$className = $class->getMethod($filename)->class;
+                            $className = $class->getName();
+                            $actionName = $class->getShortName();
+                            #if ($action == $className) {
+
+                                $filename = str_replace('Action', '', $actionName);
+                                $action = preg_replace('/([a-z]+)+([A-Z])/', '$1-$2', $filename);
+                                $action = strtolower($action);
+                                $classInfo = $this->getClassInfo($className);
+                                $target = $key . '/' . $action;
+                                $moduleName = $classInfo['module'];
+                                if (!isset($items[$target]) && !in_array($target, $excludePages)) {
+                                    /** @var \Popov\ZfcPermission\Model\Permission $item */
+                                    $item = $this->getObjectModel();
+                                    $item->setTarget($target);
+                                    $item->setEntityId(0);
+                                    $item->setType('action');
+                                    $item->setModule($moduleName);
+                                    $item->setParent(0);
+                                    $item->setTypeField('');
+                                    $item->setRequired(0);
+                                    $om->persist($item);
+                                    $translate[] = '$this->translate("' . $key . '");';
+                                    $translate[] = '$this->translate("' . $action . '");';
+                                    $translate[] = '$this->translate("' . $key . '::' . $action . '");';
+                                }
+                            #}
+                        }
+                    //}
+                }
+            }
+        }
+        if (isset($item)) {
+            $om->flush();
+        }
+
+        return $translate;
+    }
+
+    public function getClassInfo($className) {
+        $explode = explode('\\', $className);
+
+        return [
+            'module' => implode('\\', [array_shift($explode), array_shift($explode)]),
+            'type'   => array_shift($explode),
+            'target' => implode('\\', $explode),
+        ];
+    }
+
+    public function updateSettings()
+    {
+        /** @var \Magere\Permission\Service\PermissionService $service */
+        //$service = $this->sm->get('PermissionService');
+
+        /** @var \Agere\Simpler\Plugin\SimplerPlugin $simpler */
+        $simpler = $this->simplerHelper;
+
+        // Table permission_settings_pages
+        $servicePermissionPages = $this->permissionSettingsPagesService;
+
+        $pagesEntity = $servicePermissionPages->getSettingsEntity();
+        //$settingsPage = $servicePermissionPages->getSettingsByPage('', '', 'id');
+
+        // Table permission_page_bind
+        $servicePageBind = $this->permissionPageBindService;
+
+        // Table status
+        /** @var \Magere\Status\Service\StatusService $statusService */
+        #$statusService = $this->sm->get('StatusService');
+
+        // Table roles
+        $rolesService = $this->roleService;
+
+        // Table fields_pages
+        $fieldsPagesService = $this->fieldsPagesService;
+
+        $saveData = [];
+        foreach ($pagesEntity as $pageEntity) {
+            //\Zend\Debug\Debug::dump($pageEntity['name']); die(__METHOD__);
+            $itemsPageBind = $servicePageBind->getItemsBySettingsId($pageEntity[0]->getId());
+            //$itemsPageBind = $servicePageBind->toArrayKeyField('childrenId', $itemsPageBind, true);
+            $itemsPageBind = $simpler->setContext($itemsPageBind)->asAssociate('childrenId', true);
+            foreach ($itemsPageBind as $keyChildren => $itemPageBind) {
+                if ($keyChildren == 0 && $pageEntity['name'] == '') {
+                    unset($itemsPageBind[$keyChildren]);
+                    continue;
+                }
+                //$itemsPageBind[$keyChildren] = $servicePageBind->toArrayKeyVal('entityId');
+                $itemsPageBind[$keyChildren] = $simpler->setContext($itemPageBind)->asArray('entityId');
+            }
+            switch ($pageEntity['settingsMnemo']) {
+                case 'status':
+                case 'removeDependingStatus':
+                    $page = explode('/', $pageEntity['page']);
+                    $items = $statusService->getItemsCollection($page[0], '0');
+                    break;
+                case 'roles':
+                    $items = $rolesService->getItemsCollection();
+                    break;
+                case 'fields':
+                case 'editNotEmptyFields':
+                case 'uploadFile':
+                case 'deleteFile':
+                case 'deleteCreatedFile':
+                    $items = $fieldsPagesService->getFieldsByPage($pageEntity['page']);
+                    break;
+            }
+            foreach ($items as $item) {
+                $tmp = is_object($item) ? $item : $item[0];
+                foreach ($itemsPageBind as $keyChildren => $itemsEntity) {
+                    if (!in_array($tmp->getId(), $itemsEntity)) {
+                        $saveData[] = [
+                            'permissionSettingsPages'   => $pageEntity[0],
+                            'permissionSettingsPagesId' => $pageEntity[0]->getId(),
+                            'childrenId'                => $keyChildren,
+                            'entityId'                  => $tmp->getId(),
+                        ];
+                    }
+                }
+            }
+        }
+        $servicePageBind->saveData($saveData);
     }
 
     /**

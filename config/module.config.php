@@ -35,6 +35,10 @@ return [
         ]
     ],
 
+    'actions' => [
+        'permission' => __NAMESPACE__
+    ],
+
     'translator' => [
         'translation_file_patterns' => [
             [

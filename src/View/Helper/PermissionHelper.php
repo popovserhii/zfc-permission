@@ -1,11 +1,11 @@
 <?php
 namespace Popov\ZfcPermission\View\Helper;
 
-use Agere\Simpler\Plugin\SimplerPlugin;
 use Zend\View\Helper\AbstractHelper;
-use Agere\Simpler\Helper\SimplerHelper;
+//use Popov\Simpler\Helper\SimplerHelper;
+use Popov\Simpler\SimplerHelper;
 
-class Permission extends AbstractHelper {
+class PermissionHelper extends AbstractHelper {
 
 	/**
 	 * @var \Popov\ZfcPermission\Service\PermissionService
@@ -30,16 +30,16 @@ class Permission extends AbstractHelper {
 	/**
 	 * @var \Popov\Status\Service\StatusService
 	 */
-	protected $_statusService;
+	#protected $_statusService;
 
 	/**
-	 * @var \Popov\Roles\Service\RolesService
+	 * @var \Popov\ZfcRole\Service\RoleService
 	 */
 	protected $_rolesService;
 
 	protected $_access;
 
-    /** @var SimplerHelper */
+    /** @var \Popov\Simpler\SimplerHelper */
     protected $simplerHelper;
 
 	public function __construct(
@@ -47,30 +47,26 @@ class Permission extends AbstractHelper {
         $fieldsPagesService,
         $permissionSettingsPagesService,
         $permissionPageBindService,
-        $statusService,
         $rolesService,
-        $access
+        $simplerHelper,
+        $access,
+        $statusService = null
     ) {
 		$this->_permissionService = $permissionService;
 		$this->_fieldsPagesService = $fieldsPagesService;
 		$this->_permissionSettingsPagesService = $permissionSettingsPagesService;
 		$this->_permissionPageBindService = $permissionPageBindService;
-		$this->_statusService = $statusService;
-		$this->_rolesService = $rolesService;
-		$this->_access = $access;
-	}
+        $this->_rolesService = $rolesService;
+        $this->simplerHelper = $simplerHelper;
+        $this->_access = $access;
+        $this->_statusService = $statusService;
+    }
 
     /**
-     * @return SimplerPlugin
+     * @return SimplerHelper
      */
-    public function getSimplerPlugin()
+    public function getSimplerHelper()
     {
-        if (!$this->simplerHelper) {
-            //$sm = $this->getView()->getHelperPluginManager()->getServiceLocator();
-            $hpm = $this->getView()->getHelperPluginManager();
-            $this->simplerHelper = $hpm->get('simpler')->getSimplerPlugin();
-        }
-
         return $this->simplerHelper;
     }
 
@@ -80,12 +76,12 @@ class Permission extends AbstractHelper {
 	 */
 	public function permissionTree($tabs = [])
 	{
-        $simpler = $this->getSimplerPlugin();
+        $simpler = $this->getSimplerHelper();
 
-		if (is_object($tabs)) {
-			$tabs = $simpler($tabs)->asArray('controller');
+		//if (is_object($tabs)) {
+			$tabs = $simpler($tabs)->asArray('slug');
             //$tabs = $this->_fieldsPagesService->toArrayKeyVal('controller', $tabs);
-        }
+        //}
 
         $i = 0;
         $tree = [];
@@ -100,7 +96,12 @@ class Permission extends AbstractHelper {
 		$settingsPageBindArray = $this->_permissionPageBindService->getAllItems([], 'permissionSettingsPagesId');
 
 		// fields for page
-		$fieldsPagesArray = $this->_fieldsPagesService->getFieldsByPage('', 'page');
+		$fieldsPagesArray = $this->_fieldsPagesService->getFieldsByPage(''/*, 'page'*/);
+
+        //$items = $this->toArrayKeyField($fieldToArray, $items, true);
+        //$itemsPageBind = $servicePageBind->toArrayKeyField('childrenId', $itemsPageBind, true);
+        $fieldsPagesArray = $simpler->setContext($fieldsPagesArray)->asAssociate('page', true);
+
 
 		foreach ($collections as $collection) { // collection (actions) from permission table
 			// Pages. Get only module mnemo for bind permission to module and action/page to which access is applied

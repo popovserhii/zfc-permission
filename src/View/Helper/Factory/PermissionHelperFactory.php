@@ -1,6 +1,6 @@
 <?php
 /**
- * @category Agere
+ * @category Popov
  * @package Agere_Permission
  * @author Popov Sergiy <popov@agere.com.ua>
  * @datetime: 21.10.2016 18:05
@@ -8,30 +8,32 @@
 namespace Popov\ZfcPermission\View\Helper\Factory;
 
 use Interop\Container\ContainerInterface;
-use Popov\ZfcPermission\View\Helper\Permission as PermissionHelper;
+use Popov\Simpler\SimplerHelper;
+use Popov\ZfcPermission\View\Helper\PermissionHelper;
 
 class PermissionHelperFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        $sm = $container->getServiceLocator();
-        $permissionService = $sm->get('PermissionService');
-        $fieldsPagesService = $sm->get('FieldsPagesService');
-        $permissionSettingsPagesService = $sm->get('PermissionSettingsPagesService');
-        $permissionPageBindService = $sm->get('PermissionPageBindService');
-        $statusService = $sm->get('StatusService');
-        $rolesService = $sm->get('RolesService');
-        $permissionAccessService = $sm->get('PermissionAccessService');
+        $permissionService = $container->get('PermissionService');
+        $fieldsPagesService = $container->get('FieldsPagesService');
+        $permissionSettingsPagesService = $container->get('PermissionSettingsPagesService');
+        $permissionPageBindService = $container->get('PermissionPageBindService');
+        $rolesService = $container->get('RoleService');
+        $permissionAccessService = $container->get('PermissionAccessService');
         $access = $permissionAccessService->getAccess();
+        $simplerHelper = $container->get(SimplerHelper::class);
+        //$statusService = $container->get('StatusService');
 
         $permissionHelper = new PermissionHelper(
             $permissionService,
             $fieldsPagesService,
             $permissionSettingsPagesService,
             $permissionPageBindService,
-            $statusService,
             $rolesService,
+            $simplerHelper,
             $access
+            #$statusService
         );
 
         return $permissionHelper;

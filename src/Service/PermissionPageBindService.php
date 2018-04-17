@@ -1,10 +1,11 @@
 <?php
 namespace Popov\ZfcPermission\Service;
 
+use Popov\Simpler\SimplerHelper;
 use Popov\ZfcPermission\Model\Repository\PermissionPageBindRepository;
 use Popov\ZfcPermission\Model\PermissionPageBind;
-use Agere\Core\Service\DomainServiceAbstract;
-use Agere\Simpler\Plugin\SimplerPlugin;
+use Popov\ZfcCore\Service\DomainServiceAbstract;
+use Popov\Simpler\Plugin\SimplerPlugin;
 
 /**
  * @method PermissionPageBindRepository getRepository()
@@ -16,7 +17,7 @@ class PermissionPageBindService extends DomainServiceAbstract
     /** @var SimplerPlugin */
     protected $simplerPlugin;
 
-    public function __construct(SimplerPlugin $simplerPlugin)
+    public function __construct(SimplerHelper $simplerPlugin)
     {
         $this->simplerPlugin = $simplerPlugin;
     }
@@ -96,17 +97,16 @@ class PermissionPageBindService extends DomainServiceAbstract
      */
     public function saveData($data)
     {
-        $repository = $this->getRepository();
         foreach ($data as $key => $args) {
             $items[$key] = $this->getObjectModel();
             foreach ($args as $field => $val) {
                 $method = 'set' . ucfirst($field);
                 $items[$key]->$method($val);
             }
-            $repository->addItem($items[$key]);
+            $this->getObjectManager()->persist($items[$key]);
         }
         if (isset($items)) {
-            $repository->saveData();
+            $this->getObjectManager()->flush();
         }
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace Popov\ZfcPermission\View\Helper;
 
-use Popov\Agere\View\Helper\AbstractHelper;
+use Popov\Popov\View\Helper\AbstractHelper;
 
 class PermissionPageBind extends AbstractHelper
 {

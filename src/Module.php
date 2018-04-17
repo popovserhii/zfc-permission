@@ -140,7 +140,7 @@ class Module implements ConfigProviderInterface, ConsoleUsageProviderInterface, 
 		/** @var \Popov\ZfcPermission\Service\PermissionService $service */
 		$service = $this->sm->get('PermissionService');
 
-        /** @var \Agere\Simpler\Plugin\SimplerPlugin $simpler */
+        /** @var \Popov\Simpler\Plugin\SimplerPlugin $simpler */
         $simpler = $this->sm->get('ControllerPluginManager')->get('simpler');
 
 		// Table permission_settings_pages
