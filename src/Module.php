@@ -43,9 +43,14 @@ class Module implements ConfigProviderInterface, ConsoleUsageProviderInterface, 
             }, 1000);
         }
     }*/
-
+    /**
+     * You should use unique event name and attach in relaible module
+     * @deprecated
+     */
 	public function init(ModuleManager $mm)
 	{
+	    return;
+
 		$mm->getEventManager()->getSharedManager()
 			->attach('Popov\Documents\Controller\DocumentsController', ['documents.savePermissionPage'],
 				function(Event $evt)
