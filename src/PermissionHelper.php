@@ -16,7 +16,8 @@ namespace Popov\ZfcPermission;
 
 use Popov\Simpler\SimplerHelper;
 use Popov\ZfcCurrent\CurrentHelper;
-use Zend\Expressive\Helper\UrlHelper;
+//use Zend\Expressive\Helper\UrlHelper;
+use Zend\View\Helper\Url;
 use Zend\Mvc\MvcEvent as MvcEvent;
 //Zend\Permissions\Acl\Acl as Acl,
 use Zend\Session\Container as SessionContainer;
@@ -95,11 +96,13 @@ class PermissionHelper
 
     protected $denyDefault = 0;
 
-    public function __construct(CurrentHelper $currentHelper, SimplerHelper $simplerHelper, UrlHelper $urlHelper)
+    //public function __construct(CurrentHelper $currentHelper, SimplerHelper $simplerHelper, UrlHelper $urlHelper)
+    public function __construct(CurrentHelper $currentHelper, SimplerHelper $simplerHelper, Url $urlHelper)
     {
         $this->currentHelper = $currentHelper;
         $this->simpleHelper = $currentHelper;
         $this->urlHelper = $urlHelper;
+        $this->config = $config;
     }
 
     public function setAuthService($authService)
@@ -407,7 +410,11 @@ class PermissionHelper
         $action = $this->currentHelper->currentAction();
         $resource = $resource . '/' . $action;
 
-        $targetFull = $this->urlHelper->generate(
+        /*$targetFull = $this->urlHelper->generate(
+            $this->currentHelper->currentRouteName(),
+            $this->currentHelper->currentRouteParams()
+        );*/
+        $targetFull = ($this->urlHelper)(
             $this->currentHelper->currentRouteName(),
             $this->currentHelper->currentRouteParams()
         );

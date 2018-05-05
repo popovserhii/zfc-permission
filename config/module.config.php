@@ -55,6 +55,9 @@ return [
         'template_path_stack' => [
             __DIR__ . '/../view',
         ],
+        'template_map' => [
+            'admin-permission::denied' => __DIR__ . '/../view/admin/permission/denied.phtml',
+        ],
     ],
 
     // middleware

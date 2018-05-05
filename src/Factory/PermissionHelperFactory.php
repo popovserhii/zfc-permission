@@ -11,6 +11,7 @@ namespace Popov\ZfcPermission\Factory;
 
 use Popov\Simpler\SimplerHelper;
 use Zend\Expressive\Helper\UrlHelper;
+use \Zend\View\Helper\Url;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Popov\ZfcUser\Event\Authentication;
 use Popov\ZfcPermission\PermissionHelper;
@@ -24,7 +25,8 @@ class PermissionHelperFactory
         $config = $sm->get('config');
         $currentHelper = $sm->get(CurrentHelper::class);
         $simplerHelper = $sm->get(SimplerHelper::class);
-        $urlHelper = $sm->get(UrlHelper::class);
+        //$urlHelper = $sm->get(Url::class);
+        $urlHelper = $sm->get('ViewHelperManager')->get(Url::class);
         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
         $authService = $sm->get(Auth::class);
 

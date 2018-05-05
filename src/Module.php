@@ -4,6 +4,7 @@ namespace Popov\ZfcPermission;
 use Zend\ModuleManager\ModuleManager;
 use	Zend\EventManager\Event;
 use	Zend\Mvc\MvcEvent;
+use Zend\Http\Request as HttpRequest;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
 use Zend\Console\Adapter\AdapterInterface as Console;
@@ -15,13 +16,69 @@ class Module implements ConfigProviderInterface, ConsoleUsageProviderInterface, 
 	/** @var \Zend\ServiceManager\ServiceManager $sm */
 	protected $sm;
 
+
+    public function getConfig()
+    {
+        $config = include __DIR__ . '/../config/module.config.php';
+        $config['service_manager'] = $config['dependencies'];
+        unset($config['dependencies']);
+        unset($config['templates']);
+
+        return $config;
+    }
+
 	/**
 	 * @param MvcEvent $e
 	 */
 	public function onBootstrap(MvcEvent $e)
 	{
-		$app = $e->getApplication();
-		$this->sm = $app->getServiceManager();
+        if ($e->getRequest() instanceof HttpRequest) {
+            $app = $e->getApplication();
+            $container = $app->getServiceManager();
+            $eventManager = $app->getEventManager();
+            //$sharedEvents = $eventManager->getSharedManager();
+
+
+
+
+            $eventManager->attach(MvcEvent::EVENT_DISPATCH, function($e) use ($container) {
+                //$redirect = $permissionHelper->getRedirect();
+                $routeMatch = $e->getRouteMatch();
+
+                // @todo get type of $e
+
+                /** @var PermissionHelper $permissionHelper */
+                $permissionHelper = $container->get(PermissionHelper::class);
+                $permissionHelper->init();
+
+                if ($isDenied = $permissionHelper->checkPermission()) {
+                    if ($redirect = $permissionHelper->getRedirect()) {
+                        $routeMatch->setParam('controller', $redirect['resource']); // @todo improve for use admin/user/login
+                        $routeMatch->setParam('action', $redirect['action']);
+                    } else {
+                        $viewModel = $e->getViewModel();
+                        $viewModel->setTemplate('admin-permission::denied');
+                        $this->getResponse()->setStatusCode('403');
+
+                        //return $viewModel;
+                    }
+                }
+
+
+            }, 1000);
+
+
+
+            /*if ($redirect = $permissionHelper->getRedirect()) {
+                return new RedirectResponse($this->urlHelper->generate($redirect['route'], $redirect['params']));
+            } elseif ($isDenied) {
+                //$view = (new ViewModel(['layout' => 'layout::admin']))
+                //    ->setTemplate('admin-permission::denied');
+                return new HtmlResponse($this->renderer->render('admin-permission::denied', [
+                    'layout' => 'layout::admin'
+                ]));
+            }*/
+        }
 	}
 
     /**
@@ -217,11 +274,6 @@ class Module implements ConfigProviderInterface, ConsoleUsageProviderInterface, 
 		}
 		$servicePageBind->saveData($saveData);
 	}
-
-    public function getConfig()
-    {
-        return include __DIR__ . '/../config/module.config.php';
-    }
 
     public function getConsoleBanner(Console $console) {
         return 'Permission Module';
