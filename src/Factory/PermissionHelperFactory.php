@@ -10,6 +10,7 @@
 namespace Popov\ZfcPermission\Factory;
 
 use Popov\Simpler\SimplerHelper;
+use Popov\ZfcPermission\Acl\Acl;
 use Zend\Expressive\Helper\UrlHelper;
 use \Zend\View\Helper\Url;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -21,7 +22,7 @@ class PermissionHelperFactory
 {
     public function __invoke(ServiceLocatorInterface $sm)
     {
-        $acl = $sm->get('Acl');
+        $acl = $sm->get(Acl::class);
         $config = $sm->get('config');
         $currentHelper = $sm->get(CurrentHelper::class);
         $simplerHelper = $sm->get(SimplerHelper::class);

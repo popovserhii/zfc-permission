@@ -41,11 +41,9 @@ class Module implements ConfigProviderInterface, ConsoleUsageProviderInterface, 
 
 
 
-            $eventManager->attach(MvcEvent::EVENT_DISPATCH, function($e) use ($container) {
+            $eventManager->attach(MvcEvent::EVENT_DISPATCH, function(MvcEvent $e) use ($container) {
                 //$redirect = $permissionHelper->getRedirect();
                 $routeMatch = $e->getRouteMatch();
-
-                // @todo get type of $e
 
                 /** @var PermissionHelper $permissionHelper */
                 $permissionHelper = $container->get(PermissionHelper::class);
@@ -53,8 +51,20 @@ class Module implements ConfigProviderInterface, ConsoleUsageProviderInterface, 
 
                 if ($isDenied = $permissionHelper->checkPermission()) {
                     if ($redirect = $permissionHelper->getRedirect()) {
-                        $routeMatch->setParam('controller', $redirect['resource']); // @todo improve for use admin/user/login
-                        $routeMatch->setParam('action', $redirect['action']);
+                        //$routeMatch->setParam('controller', $redirect['params']['resource']); // @todo improve for use admin/user/login
+                        //$routeMatch->setParam('action', $redirect['params']['action']);
+                        $params = [
+                            'controller' => $redirect['params']['resource'],
+                            'action' => $redirect['params']['action'],
+                        ];
+                        $url = $e->getRouter()->assemble($params, ['name' => $redirect['route']]);
+
+                        $response = $e->getResponse();
+                        $response->getHeaders()->addHeaderLine('Location', $url);
+                        $response->setStatusCode(302);
+                        $response->sendHeaders();
+
+                        $e->stopPropagation(true);
                     } else {
                         $viewModel = $e->getViewModel();
                         $viewModel->setTemplate('admin-permission::denied');

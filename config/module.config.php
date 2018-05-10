@@ -70,10 +70,14 @@ return [
 
     'dependencies' => [
         'aliases' => [
+            'Acl' => Acl\Acl::class,
             'PermissionService' => Service\PermissionService::class,
             'PermissionAccessService' => Service\PermissionAccessService::class,
             'PermissionPageBindService' => Service\PermissionPageBindService::class,
             'PermissionSettingsPagesService' => Service\PermissionSettingsPagesService::class,
+        ],
+        'invokables' => [
+            Acl\Acl::class => Acl\Acl::class,
         ],
         'factories' => [
             PermissionHelper::class => Factory\PermissionHelperFactory::class,

@@ -8,11 +8,11 @@
  * https://opensource.org/licenses/MIT
  *
  * @category Popov
- * @package Popov_ZfcUser
- * @author Serhii Popov <popow.sergiy@gmail.com>
+ * @package Popov_ZfcPermission
+ * @author Serhii Popov <popow.serhii@gmail.com>
  * @license https://opensource.org/licenses/MIT The MIT License (MIT)
  */
-use Popov\ZfcUser\Acl\Acl;
+use Popov\ZfcPermission\Acl\Acl;
 
 return [
     'guest' => [

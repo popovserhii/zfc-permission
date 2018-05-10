@@ -2,7 +2,7 @@
 namespace Popov\ZfcPermission\Service;
 
 use Popov\Simpler\SimplerHelper;
-use Popov\ZFcUser\Acl\Acl;
+use Popov\ZfcPermission\Acl\Acl;
 use \Popov\ZfcPermission\Model\Permission;
 use Popov\ZfcPermission\Model\PermissionAccess;
 use Popov\ZfcPermission\Model\Repository\PermissionAccessRepository;

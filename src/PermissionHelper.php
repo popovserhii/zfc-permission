@@ -33,7 +33,7 @@ use Popov\ZfcCore\Service\ConfigAwareTrait;
 use Popov\ZfcUser\Controller\Plugin\UserPlugin;
 //use Popov\Popov\String\StringUtils as AgereString;
 use Popov\ZfcUser\Controller\Plugin\AuthService as AuthPlugin;
-use Popov\ZfcUser\Acl\Acl;
+use Popov\ZfcPermission\Acl\Acl;
 use Zend\Stdlib\Request;
 
 /**
@@ -102,7 +102,7 @@ class PermissionHelper
         $this->currentHelper = $currentHelper;
         $this->simpleHelper = $currentHelper;
         $this->urlHelper = $urlHelper;
-        $this->config = $config;
+        //$this->config = $config;
     }
 
     public function setAuthService($authService)
@@ -176,7 +176,7 @@ class PermissionHelper
     public function getAcl()
     {
         if ($this->acl === null) {
-            $this->acl = new Acl([]);
+            $this->acl = new Acl();
         }
 
         return $this->acl;
@@ -367,7 +367,10 @@ class PermissionHelper
 
         // Allowed session
         if (isset($_SESSION['location'])) {
-            $resource = $_SESSION['location']['resource'] . '/' . $_SESSION['location']['action'];
+            $resource = $_SESSION['location']['params']['controller'] ?? $_SESSION['location']['params']['resource'];
+            $action = $_SESSION['location']['params']['action'];
+
+            $resource = $resource . '/' . $action;
             // Allowed
             if ($this->acl->hasResource($resource)) {
                 $allowed[] = $this->acl->isAllowed($roleMnemos, $resource, $accessTotal);
@@ -376,7 +379,7 @@ class PermissionHelper
             }
 
             if (in_array(true, $allowed)) {
-                $routeName = 'admin/default';
+                /*$routeName = 'admin/default';
                 $params = [
                     'resource' => $_SESSION['location']['resource'],
                     'action' => $_SESSION['location']['action'],
@@ -385,10 +388,10 @@ class PermissionHelper
                     //$routeName = 'default/id';
                     $routeName = 'admin/default';
                     $params['id'] = $_SESSION['location']['id'];
-                }
+                }*/
                 //$url = $this->urlHelper->generate($dataUrl, ['name' => $routeName]);
                 //$url = $this->urlHelper->generate($routeName, $dataUrl);
-                $url = ['route' => $routeName, 'params' => $params];
+                //$url = ['route' => $_SESSION['location']['route'], 'params' => $_SESSION['location']['params']];
 
 
                 /*$response = $event->getResponse();
@@ -398,8 +401,8 @@ class PermissionHelper
                 unset($_SESSION['location']);
                 exit;*/
 
+                $this->redirect = $_SESSION['location'];
                 unset($_SESSION['location']);
-                $this->redirect = $url;
 
                 return;
             }
@@ -433,8 +436,11 @@ class PermissionHelper
 
             return;
         } else {
-            $_SESSION['location'] = $this->currentHelper->currentRouteParams();
-            $url = [
+            $_SESSION['location'] = [
+                'route' => $this->currentHelper->currentRouteName(),
+                'params' => $this->currentHelper->currentRouteParams(),
+            ];
+            $this->redirect = [
                 'route' => 'admin/default',
                 'params' => [
                     'resource' => 'user',
@@ -443,9 +449,9 @@ class PermissionHelper
             ];
         }
 
-        if ($url) {
-            $this->redirect = $url;
-        }
+        #if ($url) {
+        #    $this->redirect = $url;
+        #}
     }
 
     /**
