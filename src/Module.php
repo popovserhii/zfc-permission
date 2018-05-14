@@ -5,6 +5,7 @@ use Zend\ModuleManager\ModuleManager;
 use	Zend\EventManager\Event;
 use	Zend\Mvc\MvcEvent;
 use Zend\Http\Request as HttpRequest;
+use Zend\Mvc\Controller\AbstractController;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
 use Zend\Console\Adapter\AdapterInterface as Console;
@@ -15,7 +16,6 @@ class Module implements ConfigProviderInterface, ConsoleUsageProviderInterface, 
 {
 	/** @var \Zend\ServiceManager\ServiceManager $sm */
 	protected $sm;
-
 
     public function getConfig()
     {
@@ -36,16 +36,15 @@ class Module implements ConfigProviderInterface, ConsoleUsageProviderInterface, 
             $app = $e->getApplication();
             $container = $app->getServiceManager();
             $eventManager = $app->getEventManager();
-            //$sharedEvents = $eventManager->getSharedManager();
+            $sharedEvents = $eventManager->getSharedManager();
 
-
-
-
-            $eventManager->attach(MvcEvent::EVENT_DISPATCH, function(MvcEvent $e) use ($container) {
+            //$eventManager->attach(MvcEvent::EVENT_DISPATCH, function(MvcEvent $e) use ($container) {
+            $sharedEvents->attach(AbstractController::class,MvcEvent::EVENT_DISPATCH, function(MvcEvent $e) use ($container) {
                 /** @var PermissionHelper $permissionHelper */
                 $permissionHelper = $container->get(PermissionHelper::class);
                 $permissionHelper->init();
                 if ($isDenied = $permissionHelper->checkPermission()) {
+                    $e->stopPropagation(true);
                     if ($redirect = $permissionHelper->getRedirect()) {
                         $url = $e->getRouter()->assemble($redirect['params'], ['name' => $redirect['route']]);
 
@@ -53,17 +52,14 @@ class Module implements ConfigProviderInterface, ConsoleUsageProviderInterface, 
                         $response->getHeaders()->addHeaderLine('Location', $url);
                         $response->setStatusCode(302);
                         $response->sendHeaders();
-
-                        $e->stopPropagation(true);
                     } else {
+                        $response = $e->getResponse();
                         $viewModel = $e->getViewModel();
                         $viewModel->setTemplate('admin-permission::denied');
-                        $this->getResponse()->setStatusCode('403');
-
-                        //return $viewModel;
+                        $response ->setStatusCode(403);
                     }
                 }
-            }, 1000);
+            }, 4000);
         }
 	}
 
