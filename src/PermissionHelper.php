@@ -365,9 +365,10 @@ class PermissionHelper
             : false;
         $allowed = [$isAllowed];
 
+        //session_unset();
         // Allowed session
         if (isset($_SESSION['location'])) {
-            $resource = $_SESSION['location']['params']['controller'] ?? $_SESSION['location']['params']['resource'];
+            $resource = $_SESSION['location']['params']['resource'] ?? $_SESSION['location']['params']['controller'];
             $action = $_SESSION['location']['params']['action'];
 
             $resource = $resource . '/' . $action;

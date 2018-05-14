@@ -42,22 +42,12 @@ class Module implements ConfigProviderInterface, ConsoleUsageProviderInterface, 
 
 
             $eventManager->attach(MvcEvent::EVENT_DISPATCH, function(MvcEvent $e) use ($container) {
-                //$redirect = $permissionHelper->getRedirect();
-                $routeMatch = $e->getRouteMatch();
-
                 /** @var PermissionHelper $permissionHelper */
                 $permissionHelper = $container->get(PermissionHelper::class);
                 $permissionHelper->init();
-
                 if ($isDenied = $permissionHelper->checkPermission()) {
                     if ($redirect = $permissionHelper->getRedirect()) {
-                        //$routeMatch->setParam('controller', $redirect['params']['resource']); // @todo improve for use admin/user/login
-                        //$routeMatch->setParam('action', $redirect['params']['action']);
-                        $params = [
-                            'controller' => $redirect['params']['resource'],
-                            'action' => $redirect['params']['action'],
-                        ];
-                        $url = $e->getRouter()->assemble($params, ['name' => $redirect['route']]);
+                        $url = $e->getRouter()->assemble($redirect['params'], ['name' => $redirect['route']]);
 
                         $response = $e->getResponse();
                         $response->getHeaders()->addHeaderLine('Location', $url);
@@ -73,21 +63,7 @@ class Module implements ConfigProviderInterface, ConsoleUsageProviderInterface, 
                         //return $viewModel;
                     }
                 }
-
-
             }, 1000);
-
-
-
-            /*if ($redirect = $permissionHelper->getRedirect()) {
-                return new RedirectResponse($this->urlHelper->generate($redirect['route'], $redirect['params']));
-            } elseif ($isDenied) {
-                //$view = (new ViewModel(['layout' => 'layout::admin']))
-                //    ->setTemplate('admin-permission::denied');
-                return new HtmlResponse($this->renderer->render('admin-permission::denied', [
-                    'layout' => 'layout::admin'
-                ]));
-            }*/
         }
 	}
 
