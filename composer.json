@@ -24,5 +24,11 @@
     "psr-4": {
       "Popov\\ZfcPermission\\": "src/"
     }
+  },
+  "extra": {
+    "zf": {
+      "component": "Stagem\\ZfcPermission",
+      "config-provider": "Stagem\\ZfcPermission\\ConfigProvider"
+    }
   }
 }
