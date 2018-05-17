@@ -368,7 +368,7 @@ class PermissionHelper
         //session_unset();
         // Allowed session
         if (isset($_SESSION['location'])) {
-            $resource = $_SESSION['location']['params']['resource'] ?? $_SESSION['location']['params']['controller'];
+            $resource = $_SESSION['location']['params']['controller'] ?? $_SESSION['location']['params']['controller'];
             $action = $_SESSION['location']['params']['action'];
 
             $resource = $resource . '/' . $action;
@@ -382,7 +382,7 @@ class PermissionHelper
             if (in_array(true, $allowed)) {
                 /*$routeName = 'admin/default';
                 $params = [
-                    'resource' => $_SESSION['location']['resource'],
+                    'controller' => $_SESSION['location']['controller'],
                     'action' => $_SESSION['location']['action'],
                 ];
                 if (isset($_SESSION['location']['id'])) {
@@ -410,7 +410,7 @@ class PermissionHelper
         }
 
         // Resource
-        $resource = $this->currentHelper->currentResource();
+        $resource = $this->currentHelper->currentController();
         $action = $this->currentHelper->currentAction();
         $resource = $resource . '/' . $action;
 
@@ -444,7 +444,7 @@ class PermissionHelper
             $this->redirect = [
                 'route' => 'admin/default',
                 'params' => [
-                    'resource' => 'user',
+                    'controller' => 'user',
                     'action' => 'login',
                 ],
             ];
@@ -476,7 +476,7 @@ class PermissionHelper
         if ($role && $role->getMnemo() && !$acl->isAllowed($role->getMnemo(), 'all', $accessDefault)) {
             // Where
             if (isset($params['id']) && $params['id'] > 0) {
-                $where = "(p.`target` = '{$params['resource']}/{$params['action']}/{$params['id']}'
+                $where = "(p.`target` = '{$params['controller']}/{$params['action']}/{$params['id']}'
 						AND p.`entityId` = {$params['id']} AND p.`type` = 'action')";
             }
 
