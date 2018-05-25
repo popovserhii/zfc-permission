@@ -27,8 +27,8 @@
   },
   "extra": {
     "zf": {
-      "component": "Stagem\\ZfcPermission",
-      "config-provider": "Stagem\\ZfcPermission\\ConfigProvider"
+      "component": "Popov\\ZfcPermission",
+      "config-provider": "Popov\\ZfcPermission\\ConfigProvider"
     }
   }
 }
