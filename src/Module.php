@@ -1,6 +1,7 @@
 <?php
 namespace Popov\ZfcPermission;
 
+use Popov\ZfcCurrent\CurrentHelper;
 use Zend\ModuleManager\ModuleManager;
 use	Zend\EventManager\Event;
 use	Zend\Mvc\MvcEvent;
@@ -40,7 +41,11 @@ class Module implements ConfigProviderInterface, ConsoleUsageProviderInterface, 
 
             //$eventManager->attach(MvcEvent::EVENT_DISPATCH, function(MvcEvent $e) use ($container) {
             $sharedEvents->attach(AbstractController::class,MvcEvent::EVENT_DISPATCH, function(MvcEvent $e) use ($container) {
-                /** @var PermissionHelper $permissionHelper */
+                $area = $container->get(CurrentHelper::class)->currentRouteParams()['area'] ?? null;
+                if ('admin' !== $area) {
+                    return;
+                }
+
                 $permissionHelper = $container->get(PermissionHelper::class);
                 $permissionHelper->init();
                 if ($isDenied = $permissionHelper->checkPermission()) {

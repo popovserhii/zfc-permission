@@ -105,6 +105,14 @@ class PermissionHelper
         //$this->config = $config;
     }
 
+    /**
+     * @return CurrentHelper
+     */
+    public function getCurrentHelper()
+    {
+        return $this->currentHelper;
+    }
+
     public function setAuthService($authService)
     {
         $this->authService = $authService;
@@ -115,15 +123,6 @@ class PermissionHelper
         return $this->authService;
     }
 
-    public function setRequest($request)
-    {
-        $this->request = $request;
-    }
-
-    public function getRequest()
-    {
-        return $this->request;
-    }
 
     /*public function setUsePermission($usePermission)
     {
@@ -368,15 +367,15 @@ class PermissionHelper
         //session_unset();
         // Allowed session
         if (isset($_SESSION['location'])) {
-            $resource = $_SESSION['location']['params']['controller'] ?? $_SESSION['location']['params']['controller'];
+            $controller = $_SESSION['location']['params']['controller'] ?? $_SESSION['location']['params']['controller'];
             $action = $_SESSION['location']['params']['action'];
 
-            $resource = $resource . '/' . $action;
+            $controller = $controller . '/' . $action;
             // Allowed
-            if ($this->acl->hasResource($resource)) {
-                $allowed[] = $this->acl->isAllowed($roleMnemos, $resource, $accessTotal);
-                $allowed[] = $this->acl->isAllowed($roleMnemos, $resource, $access['write']);
-                $allowed[] = $this->acl->isAllowed($roleMnemos, $resource, $access['read']);
+            if ($this->acl->hasResource($controller)) {
+                $allowed[] = $this->acl->isAllowed($roleMnemos, $controller, $accessTotal);
+                $allowed[] = $this->acl->isAllowed($roleMnemos, $controller, $access['write']);
+                $allowed[] = $this->acl->isAllowed($roleMnemos, $controller, $access['read']);
             }
 
             if (in_array(true, $allowed)) {
@@ -410,9 +409,9 @@ class PermissionHelper
         }
 
         // Resource
-        $resource = $this->currentHelper->currentController();
+        $controller = $this->currentHelper->currentController();
         $action = $this->currentHelper->currentAction();
-        $resource = $resource . '/' . $action;
+        $controller = $controller . '/' . $action;
 
         /*$targetFull = $this->urlHelper->generate(
             $this->currentHelper->currentRouteName(),
@@ -424,7 +423,7 @@ class PermissionHelper
         );
 
         // Allowed
-        if ($this->acl->hasAccessByRoles($roleMnemos, $resource)
+        if ($this->acl->hasAccessByRoles($roleMnemos, $controller)
             || $this->acl->hasAccessByRoles($roleMnemos, $targetFull)
         ) {
             $this->permissionDenied = false;

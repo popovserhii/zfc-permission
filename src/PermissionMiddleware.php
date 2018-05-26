@@ -21,9 +21,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
-use Zend\Expressive\Helper\UrlHelper;
-use Zend\Expressive\Template\TemplateRendererInterface;
-use Zend\View\Model\ViewModel;
+use Zend\View\Renderer\RendererInterface;
+use Popov\ZfcCore\Helper\UrlHelper;
 
 class PermissionMiddleware implements MiddlewareInterface
 {
@@ -33,7 +32,7 @@ class PermissionMiddleware implements MiddlewareInterface
     protected $permissionHelper;
 
     /**
-     * @var TemplateRendererInterface
+     * @var RendererInterface
      */
     protected $renderer;
 
@@ -49,9 +48,8 @@ class PermissionMiddleware implements MiddlewareInterface
 
     public function __construct(
         PermissionHelper $permissionHelper,
-        TemplateRendererInterface $renderer,
-        UrlHelper $urlHelper,
-        array $config = null
+        RendererInterface $renderer,
+        UrlHelper $urlHelper
     ) {
         $this->permissionHelper = $permissionHelper;
         $this->renderer = $renderer;
