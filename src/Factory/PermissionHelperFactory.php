@@ -18,6 +18,7 @@ use Popov\ZfcUser\Event\Authentication;
 use Popov\ZfcPermission\PermissionHelper;
 use Popov\ZfcCurrent\CurrentHelper;
 use Popov\ZfcUser\Auth\Auth;
+
 class PermissionHelperFactory
 {
     public function __invoke(ServiceLocatorInterface $sm)

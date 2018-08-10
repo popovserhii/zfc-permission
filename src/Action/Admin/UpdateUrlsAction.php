@@ -2,18 +2,23 @@
 
 namespace Popov\ZfcPermission\Action\Admin;
 
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+
+// @todo wait until they will start to use Pst in codebase @see https://github.com/zendframework/zend-mvc/blob/master/src/MiddlewareListener.php#L11
+//use Psr\Http\Server\MiddlewareInterface;
+//use Psr\Http\Server\RequestHandlerInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Interop\Http\Server\RequestHandlerInterface;
+
 use Popov\ZfcCore\Filter\Translit;
+use Popov\ZfcCore\Helper\UrlHelper;
 use Popov\ZfcPermission\Controller\PermissionAccessController;
 use Popov\ZfcPermission\Service\PermissionService;
 use Popov\ZfcRole\Service\RoleService;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Http\Server\MiddlewareInterface;
 use Fig\Http\Message\RequestMethodInterface;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Router\RouteResult;
-use Zend\Expressive\Helper\UrlHelper;
 use Zend\View\Model\ViewModel;
 use Popov\ZfcForm\FormElementManager;
 use Popov\ZfcUser\Form\UserForm;
@@ -49,6 +54,13 @@ class UpdateUrlsAction implements MiddlewareInterface, RequestMethodInterface
         $this->urlHelper = $urlHelper;
     }
 
+    /**
+     * /admin/permission/update-urls
+     *
+     * @param ServerRequestInterface $request
+     * @param RequestHandlerInterface $handler
+     * @return ResponseInterface
+     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         //$route = $request->getAttribute(RouteResult::class);

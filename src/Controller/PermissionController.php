@@ -22,7 +22,7 @@ class PermissionController extends AbstractActionController {
 		
         $translate = $service->run($routesToControllers);
         // Write to file
-        $file = getcwd() . '/module/Popov/Permission/language/translate.phtml';
+        $file = getcwd() . '/data/language/permission/translate.phtml';
         $fileContent = file($file);
         $fileContent = array_unique(array_merge($fileContent, $translate));
         file_put_contents($file, implode("\n", $fileContent));

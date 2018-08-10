@@ -36,7 +36,7 @@ return [
     ],
 
     'actions' => [
-        'permission' => __NAMESPACE__
+        'permission' => __NAMESPACE__ . '\Action'
     ],
 
     'translator' => [
@@ -52,11 +52,8 @@ return [
 
     // mvc
     'view_manager' => [
-        'template_path_stack' => [
-            __DIR__ . '/../view',
-        ],
-        'template_map' => [
-            'admin-permission::denied' => __DIR__ . '/../view/admin/permission/denied.phtml',
+        'prefix_template_path_stack' => [
+            'permission::' => __DIR__ . '/../view/permission',
         ],
     ],
 
@@ -64,7 +61,6 @@ return [
     'templates' => [
         'paths' => [
             'admin-permission'  => [__DIR__ . '/../view/admin/permission'],
-            //'layout' => [__DIR__ . '/../view/layout'],
         ],
     ],
 

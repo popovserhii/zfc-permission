@@ -16,8 +16,8 @@ use Popov\ZfcPermission\Acl\Acl;
 
 return [
     'guest' => [
-        ['target' => 'user/login', 'access' => Acl::ACCESS_TOTAL],
-        ['target' => 'user/logout', 'access' => Acl::ACCESS_TOTAL],
-        ['target' => 'user/forgot-password', 'access' => Acl::ACCESS_TOTAL],
+        ['target' => 'user/admin-login', 'access' => Acl::ACCESS_TOTAL],
+        ['target' => 'user/admin-logout', 'access' => Acl::ACCESS_TOTAL],
+        ['target' => 'user/admin-forgot-password', 'access' => Acl::ACCESS_TOTAL],
     ],
 ];

@@ -2,6 +2,7 @@
 namespace Popov\ZfcPermission;
 
 use Popov\ZfcCurrent\CurrentHelper;
+use Zend\Diactoros\Response\HtmlResponse;
 use Zend\ModuleManager\ModuleManager;
 use	Zend\EventManager\Event;
 use	Zend\Mvc\MvcEvent;
@@ -12,6 +13,8 @@ use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
 use Zend\Console\Adapter\AdapterInterface as Console;
 use Zend\ModuleManager\Feature\ConsoleBannerProviderInterface;
 use	Popov\Reflection\Service\ReflectionService;
+use Zend\View\Model\ViewModel;
+use Zend\View\Renderer\RendererInterface;
 
 class Module implements ConfigProviderInterface, ConsoleUsageProviderInterface, ConsoleBannerProviderInterface
 {
@@ -58,10 +61,16 @@ class Module implements ConfigProviderInterface, ConsoleUsageProviderInterface, 
                         $response->setStatusCode(302);
                         $response->sendHeaders();
                     } else {
+                        $renderer = $container->get('ViewRenderer');
                         $response = $e->getResponse();
-                        $viewModel = $e->getViewModel();
-                        $viewModel->setTemplate('admin-permission::denied');
-                        $response ->setStatusCode(403);
+                        $response->setStatusCode(403);
+                        $layout = $e->getViewModel();
+                        $layout->setTemplate('layout::admin')
+                            ->setVariable('content', $renderer->render('permission::admin/denied'));
+
+                        #return new HtmlResponse($renderer->render(
+                        #    $layout->setVariable('content', $renderer->render('permission::admin/denied'))
+                        #));
                     }
                 }
             }, 4000);

@@ -217,7 +217,6 @@ class PermissionHelper
         return $this->redirect;
     }
 
-
     /**
      * @param string|array $args
      * @param string $assocDigit, possible values: user, role, group
@@ -279,30 +278,22 @@ class PermissionHelper
         ];
     }
 
-    /*public function setup()
+    public static function getResourceName($area, $controller, $action)
     {
-        $this->init();
-        $this->mvcPreDispatch();
-
-        /*$sharedEvents->attach(\Zend\Mvc\Controller\AbstractActionController::class, 'dispatch', [
-            $auth,
-            'mvcPreDispatch',
-        ], 1000);
-    }*/
+        return $controller . '/' . (($area == 'default') ? : $area . '-') . $action;
+    }
 
     /**
 	 * Initialization ACL resources for current user
 	 */
 	public function init() {
         $this->initRoles();
-
 		foreach ($this->roles as $role => $resources) {
 			$role = new GenericRole($role);
 			$this->acl->addRole($role);
 			//adding resources
 			foreach ($resources as $resource) {
                 if (!$this->acl->hasResource($resource['target'])) {
-					//$this->acl->addResource(new \Zend\Permissions\Acl\Resource\GenericResource($resource['target']));
 					$this->acl->addResource(new GenericResource($resource['target']));
 				}
 				if ($resource['access'] == $this->denyDefault) {
@@ -322,12 +313,6 @@ class PermissionHelper
         return $this->permissionDenied;
     }
 
-	/**
-	 * preDispatch Event Handler
-	 *
-     * @return void
-	 * @throws \Exception
-	 */
     public function checkGeneralPermission()
     {
         $roleMnemos = [Acl::DEFAULT_ROLE];
@@ -345,12 +330,11 @@ class PermissionHelper
                 $roleMnemos[] = $role->getMnemo();
             }
 
-            //if (!$userPlugin->isAdmin()) {
-            if (!in_array('admin', $roleMnemos)) {
-                // Update expire login
-                $sessionAuth = new SessionContainer('Zend_Auth');
-                $sessionAuth->setExpirationSeconds(3600); // 60 minutes
-            }
+            // Update expire login
+            $sessionAuth = new SessionContainer('Zend_Auth');
+            in_array('admin', $roleMnemos)
+                ? $sessionAuth->setExpirationSeconds(60 * 60 * 24) // 24 hours
+                : $sessionAuth->setExpirationSeconds(60 * 60); // 60 minutes
 
             #foreach ($this->getConfig()['acl']['guest'] as $resource) {
             #    $this->acl->addResource(new GenericResource($resource['target']));
@@ -364,43 +348,22 @@ class PermissionHelper
             : false;
         $allowed = [$isAllowed];
 
-        //session_unset();
         // Allowed session
         if (isset($_SESSION['location'])) {
-            $controller = $_SESSION['location']['params']['controller'] ?? $_SESSION['location']['params']['controller'];
+            $controller = $_SESSION['location']['params']['controller'];
             $action = $_SESSION['location']['params']['action'];
+            $area = $_SESSION['location']['params']['area'];
 
-            $controller = $controller . '/' . $action;
+            //$controller = $controller . '/' . $action;
+            $resource = self::getResourceName($area, $controller, $action);
             // Allowed
             if ($this->acl->hasResource($controller)) {
-                $allowed[] = $this->acl->isAllowed($roleMnemos, $controller, $accessTotal);
-                $allowed[] = $this->acl->isAllowed($roleMnemos, $controller, $access['write']);
-                $allowed[] = $this->acl->isAllowed($roleMnemos, $controller, $access['read']);
+                $allowed[] = $this->acl->isAllowed($roleMnemos, $resource, $accessTotal);
+                $allowed[] = $this->acl->isAllowed($roleMnemos, $resource, $access['write']);
+                $allowed[] = $this->acl->isAllowed($roleMnemos, $resource, $access['read']);
             }
 
             if (in_array(true, $allowed)) {
-                /*$routeName = 'admin/default';
-                $params = [
-                    'controller' => $_SESSION['location']['controller'],
-                    'action' => $_SESSION['location']['action'],
-                ];
-                if (isset($_SESSION['location']['id'])) {
-                    //$routeName = 'default/id';
-                    $routeName = 'admin/default';
-                    $params['id'] = $_SESSION['location']['id'];
-                }*/
-                //$url = $this->urlHelper->generate($dataUrl, ['name' => $routeName]);
-                //$url = $this->urlHelper->generate($routeName, $dataUrl);
-                //$url = ['route' => $_SESSION['location']['route'], 'params' => $_SESSION['location']['params']];
-
-
-                /*$response = $event->getResponse();
-                $response->getHeaders()->addHeaderLine('Location', $url);
-                $response->setStatusCode(302);
-                $response->sendHeaders();
-                unset($_SESSION['location']);
-                exit;*/
-
                 $this->redirect = $_SESSION['location'];
                 unset($_SESSION['location']);
 
@@ -409,22 +372,19 @@ class PermissionHelper
         }
 
         // Resource
+        $area = $this->currentHelper->currentRouteParams()['area'] ?? null;
         $controller = $this->currentHelper->currentController();
         $action = $this->currentHelper->currentAction();
-        $controller = $controller . '/' . $action;
-
-        /*$targetFull = $this->urlHelper->generate(
-            $this->currentHelper->currentRouteName(),
-            $this->currentHelper->currentRouteParams()
-        );*/
-        $targetFull = ($this->urlHelper)(
+        $resource = self::getResourceName($area, $controller, $action);
+        
+        $resourceFull = ($this->urlHelper)(
             $this->currentHelper->currentRouteName(),
             $this->currentHelper->currentRouteParams()
         );
 
         // Allowed
-        if ($this->acl->hasAccessByRoles($roleMnemos, $controller)
-            || $this->acl->hasAccessByRoles($roleMnemos, $targetFull)
+        if ($this->acl->hasAccessByRoles($roleMnemos, $resource)
+            || $this->acl->hasAccessByRoles($roleMnemos, $resourceFull)
         ) {
             $this->permissionDenied = false;
             return;
@@ -448,21 +408,13 @@ class PermissionHelper
                 ],
             ];
         }
-
-        #if ($url) {
-        #    $this->redirect = $url;
-        #}
     }
 
     /**
      * Check if user has access to page with ID
-     *
-     * @return bool
      */
-    public function checkItemPermission(/*MvcEvent $e, $params*/)
+    public function checkItemPermission()
     {
-        static $accessDefault = 6;
-
         $params = $this->currentHelper->currentRouteParams();
 
         $where = '';
@@ -472,7 +424,7 @@ class PermissionHelper
         // Acl class
         $acl = $this->getAcl();
         $role = $user ? $user->getRoles()->first() : false;
-        if ($role && $role->getMnemo() && !$acl->isAllowed($role->getMnemo(), 'all', $accessDefault)) {
+        if ($role && $role->getMnemo() && !$acl->isAllowed($role->getMnemo(), 'all', Acl::ACCESS_TOTAL)) {
             // Where
             if (isset($params['id']) && $params['id'] > 0) {
                 $where = "(p.`target` = '{$params['controller']}/{$params['action']}/{$params['id']}'
@@ -504,11 +456,10 @@ OR pa.`roleId` = '{$userId}')
 SQL;
                     // Table permission_access
                     $resultAccess = $dbAdapter->query($sql, $dbAdapter::QUERY_MODE_EXECUTE);
-                    // Access to page
 
+                    // Access to page
                     if ($resultAccess->count()) {
                         $this->permissionDenied = false;
-                        //return false;
                     }
                 }
             }
@@ -519,7 +470,8 @@ SQL;
 	 * @todo: Implement more perfect structure
 	 * @return mixed
 	 */
-	public function initRoles() {
+	public function initRoles()
+    {
         $this->roles = ArrayUtils::merge($this->getConfig()['acl'], $this->roles);
 
         $resultRolesArray = $this->getResultRolesArray();
@@ -533,13 +485,9 @@ SQL;
         $dbAdapter = $this->getDbAdapter();
 		$results = $dbAdapter->query($sql, $dbAdapter::QUERY_MODE_EXECUTE);
 
-		//\Zend\Debug\Debug::dump($resultRolesArray); die(__METHOD__);
-
 		foreach ($results as $result) {
 			// Parse roleId
 			$assocDigit = self::parseStringAssocDigit($result['roleId']);
-			//\Zend\Debug\Debug::dump($assocDigit);
-
 			if ($assocDigit['field'] == 'role' && isset($resultRolesArray[$assocDigit['id']])) {
 				$this->roles[$resultRolesArray[$assocDigit['id']]['mnemo']][] = [
 					'target' => $result['target'],
@@ -551,7 +499,6 @@ SQL;
 
 	private function getResultRolesArray() {
 		static $resultRolesArray;
-		static $accessDefault = Acl::ACCESS_TOTAL;
 
         if (!$resultRolesArray) {
             $dbAdapter = $this->getDbAdapter();
@@ -565,12 +512,12 @@ SQL;
 				if ($result['resource'] == 'all') {
 					$this->roles[$result['mnemo']][] = [
 						'target' => $result['resource'],
-						'access' => $accessDefault,
+						'access' => Acl::ACCESS_TOTAL,
 					];
 				} else {
                     $this->roles[$result['mnemo']][] = [
                         'target' => $result['resource'],
-                        'access' => $accessDefault,
+                        'access' => Acl::ACCESS_TOTAL,
                     ];
 					$resultRolesArray[$result['id']] = $result;
 				}

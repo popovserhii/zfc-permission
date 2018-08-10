@@ -3,7 +3,7 @@ namespace Popov\ZfcPermission\Service;
 
 use Popov\ZfcFields\Service\FieldsPagesService;
 use Popov\ZfcRole\Service\RoleService;
-use Zend\Server\Reflection;
+use Zend\Reflection;
 use Zend\Filter\Word\SeparatorToCamelCase;
 use Zend\Stdlib\Exception\InvalidArgumentException;
 use Zend\Mvc\Controller\AbstractController;
@@ -305,64 +305,60 @@ class PermissionService extends DomainServiceAbstract
         $translate = [];
         $excludePages = [];
         $om = $this->getObjectManager();
-        $repository = $this->getRepository();
+        //$repository = $this->getRepository();
         //$reflection = new ReflectionService();
         $simplerPlugin = $this->getSimpler();
         $items = $this->getItemsCollection('action', 0);
         $items = $simplerPlugin->setContext($items)->asAssociate('target');
         foreach ($config as $key => $namespace) {
-            $configProviderClass = $namespace . '\\ConfigProvider';
-            if (!class_exists($configProviderClass)) {
-                continue;
+            $moduleName = substr($namespace, 0, strrpos($namespace, 'Action') - 1);
+            if (!class_exists($configProviderClass = $moduleName . '\\ConfigProvider')) {
+                if (!class_exists($configProviderClass = $moduleName . '\\Module')) {
+                    continue;
+                }
             }
 
             $reflector = new \ReflectionClass($configProviderClass);
             $fn = $reflector->getFileName();
             $moduleDir = dirname($fn);
+            $actionPlace = substr($namespace, strrpos($namespace, 'Action'));
+            if (!is_dir($path = $moduleDir . '/' . $actionPlace . '/Admin')) {
+                continue;
+            }
 
-            $path = $moduleDir . '/Action/Admin';
-            $dir = new \DirectoryIterator($path);
+            $dir = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
             foreach ($dir as $fileInfo) {
-                if (!$fileInfo->isDir() && !$fileInfo->isDot()) {
-                    //echo $fileinfo->getFilename().'<br>';
+                /** @var \SplFileInfo $fileInfo */
+                if (!$fileInfo->isDir() && $fileInfo->getExtension() == 'php') {
+                    $baseName = $fileInfo->getBasename('.' . $fileInfo->getExtension());
+                    // end with 'Action'
+                    if (substr($baseName, -strlen('Action')) !== 'Action') {
+                        continue;
+                    }
+                    //$action = substr($fileInfo->getPath(), strrpos($fileInfo->getPath(), $actionPlace) + strlen('Action') + 2);
+                    $action = substr($fileInfo->getPath(), strrpos($fileInfo->getPath(), $actionPlace) + strlen($actionPlace) + 1);
+                    $action = $action . $baseName;
+                    $action = str_replace(['\\', '/'], '', $action);
+                    $action = str_replace('Action', '', $action);
+                    $action = preg_replace('/([a-z]+)+([A-Z])/', '$1-$2', $action);
+                    $action = strtolower($action);
 
-
-                    $baseName = $fileInfo->getBasename('.php');
-                    $actionClass = $namespace . '\\Action\\Admin\\' . $baseName;
-                    $class = Reflection::reflectClass($actionClass);
-                    //$methods = $class->getMethods();
-                    //foreach ($methods as $method) {
-                        $filename = $fileInfo->getFilename();
-                        if (strpos($filename, 'Action')) {
-                            //$className = $class->getMethod($filename)->class;
-                            $className = $class->getName();
-                            $actionName = $class->getShortName();
-                            #if ($action == $className) {
-
-                                $filename = str_replace('Action', '', $actionName);
-                                $action = preg_replace('/([a-z]+)+([A-Z])/', '$1-$2', $filename);
-                                $action = strtolower($action);
-                                $classInfo = $this->getClassInfo($className);
-                                $target = $key . '/' . $action;
-                                $moduleName = $classInfo['module'];
-                                if (!isset($items[$target]) && !in_array($target, $excludePages)) {
-                                    /** @var \Popov\ZfcPermission\Model\Permission $item */
-                                    $item = $this->getObjectModel();
-                                    $item->setTarget($target);
-                                    $item->setEntityId(0);
-                                    $item->setType('action');
-                                    $item->setModule($moduleName);
-                                    $item->setParent(0);
-                                    $item->setTypeField('');
-                                    $item->setRequired(0);
-                                    $om->persist($item);
-                                    $translate[] = '$this->translate("' . $key . '");';
-                                    $translate[] = '$this->translate("' . $action . '");';
-                                    $translate[] = '$this->translate("' . $key . '::' . $action . '");';
-                                }
-                            #}
-                        }
-                    //}
+                    $target = $key . '/' . $action;
+                    if (!isset($items[$target]) && !in_array($target, $excludePages)) {
+                        /** @var \Popov\ZfcPermission\Model\Permission $item */
+                        $item = $this->getObjectModel();
+                        $item->setTarget($target);
+                        $item->setEntityId(0);
+                        $item->setType('action');
+                        $item->setModule($moduleName);
+                        $item->setParent(0);
+                        $item->setTypeField('');
+                        $item->setRequired(0);
+                        $om->persist($item);
+                        $translate[] = '$this->translate("' . $key . '");';
+                        $translate[] = '$this->translate("' . $action . '");';
+                        $translate[] = '$this->translate("' . $key . '::' . $action . '");';
+                    }
                 }
             }
         }

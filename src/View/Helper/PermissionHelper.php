@@ -79,7 +79,7 @@ class PermissionHelper extends AbstractHelper {
         $simpler = $this->getSimplerHelper();
 
 		//if (is_object($tabs)) {
-			$tabs = $simpler($tabs)->asArray('slug');
+			$tabs = $simpler($tabs)->asArray('controller');
             //$tabs = $this->_fieldsPagesService->toArrayKeyVal('controller', $tabs);
         //}
 
