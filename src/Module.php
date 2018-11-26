@@ -43,14 +43,16 @@ class Module implements ConfigProviderInterface, ConsoleUsageProviderInterface, 
             $sharedEvents = $eventManager->getSharedManager();
 
             //$eventManager->attach(MvcEvent::EVENT_DISPATCH, function(MvcEvent $e) use ($container) {
-            $sharedEvents->attach(AbstractController::class,MvcEvent::EVENT_DISPATCH, function(MvcEvent $e) use ($container) {
+            $sharedEvents->attach(AbstractController::class, MvcEvent::EVENT_DISPATCH, function(MvcEvent $e) use ($container) {
                 $area = $container->get(CurrentHelper::class)->currentRouteParams()['area'] ?? null;
+
+                $permissionHelper = $container->get(PermissionHelper::class);
+                $permissionHelper->init();
+
                 if ('admin' !== $area) {
                     return;
                 }
 
-                $permissionHelper = $container->get(PermissionHelper::class);
-                $permissionHelper->init();
                 if ($isDenied = $permissionHelper->checkPermission()) {
                     $e->stopPropagation(true);
                     if ($redirect = $permissionHelper->getRedirect()) {

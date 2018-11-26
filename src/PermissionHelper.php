@@ -321,7 +321,7 @@ class PermissionHelper
 
         $userPlugin = $this->getAuthService();
         #$user = ($userPlugin->hasIdentity() && ($user = $userPlugin->getIdentity())) ? $user : false;
-        $user = $user = $userPlugin->getIdentity();
+        $user = $userPlugin->getIdentity();
 
         /** @var UserPlugin $userPlugin */
         if ($user && $user->getId()/* && $user->getIsInner()*/) {
