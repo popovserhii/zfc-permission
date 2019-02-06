@@ -48,7 +48,7 @@ class PermissionSettingsPagesService extends DomainServiceAbstract
         $simplerPlugin = $this->getSimpler();
         $items = $this->getSettingsByPage();
 
-        //$itemsArray = $this->toArrayKeyField('id', $items);
+        //$itemsArray = $this->toArrayKeyField('id', $selectedItems);
         $itemsArray = $simplerPlugin->setContext($items)->asAssociate('id');
         $method = 'get' . ucfirst($fieldToArray);
 
@@ -114,7 +114,7 @@ class PermissionSettingsPagesService extends DomainServiceAbstract
         if ($fieldToArray) {
             $simplerPlugin = $this->getSimpler();
             $items = $simplerPlugin->setContext($items)->asAssociate($fieldToArray, true);
-            //$items = $this->toArrayKeyField($fieldToArray, $items, true);
+            //$selectedItems = $this->toArrayKeyField($fieldToArray, $selectedItems, true);
         }
 
         return $items;
