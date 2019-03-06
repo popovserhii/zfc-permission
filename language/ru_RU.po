@@ -549,7 +549,7 @@ msgid "logistics::download"
 msgstr "Експорт по перегону авто"
 
 #: language/translate.phtml:271
-msgid "store::delete-items"
+msgid "store::delete-selectedItems"
 msgstr "Удалить несколько авто"
 
 #: language/translate.phtml:273
