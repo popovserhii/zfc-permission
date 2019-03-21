@@ -163,7 +163,7 @@ class PermissionAccessService extends DomainServiceAbstract
         $repository = $this->getRepository();
         $items = $repository->findItems($args);
         if ($keyField != '') {
-            //$items = $this->toArrayKeyField($keyField, $items);
+            //$selectedItems = $this->toArrayKeyField($keyField, $selectedItems);
             $simplerPlugin = $this->getSimplerPlugin();
             $items = $simplerPlugin->setContext($items)->asAssociate($keyField);
         }

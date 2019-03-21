@@ -38,7 +38,7 @@ class PermissionPageBindService extends DomainServiceAbstract
         $repository = $this->getRepository();
         $items = $repository->findAllItems($groupBy);
         if ($fieldToArray) {
-            //$items = $this->toArrayKeyField($fieldToArray, $items, true);
+            //$selectedItems = $this->toArrayKeyField($fieldToArray, $selectedItems, true);
             $items = $simplerPlugin->setContext($items)->asAssociate($fieldToArray, true);
         }
 
@@ -75,7 +75,7 @@ class PermissionPageBindService extends DomainServiceAbstract
         $repository = $this->getRepository();
         $items = $repository->findItemsAccessBySettingsId($settingIds, $roleId, $childrenIds, $entityId);
         if ($fieldToArray) {
-            //$items = $this->toArrayKeyField($fieldToArray, $items, true);
+            //$selectedItems = $this->toArrayKeyField($fieldToArray, $selectedItems, true);
             $items = $simplerPlugin->setContext($items)->asAssociate($fieldToArray, true);
         }
 
