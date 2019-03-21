@@ -123,37 +123,6 @@ class PermissionHelper
         return $this->authService;
     }
 
-
-    /*public function setUsePermission($usePermission)
-    {
-        $this->usePermission = $usePermission;
-
-        return $this;
-    }*/
-
-    /**
-     * Sets Authentication Plugin
-     *
-     * @param AuthPlugin $userAuthenticationPlugin
-     * @return $this
-     */
-    /*public function setUserAuthenticationPlugin(AuthPlugin $userAuthenticationPlugin)
-    {
-        $this->_userAuth = $userAuthenticationPlugin;
-
-        return $this;
-    }*/
-
-    /**
-     * Gets Authentication Plugin
-     *
-     * @return Authentication
-     */
-    /*public function getUserAuthenticationPlugin()
-    {
-        return $this->_userAuth;
-    }*/
-
     /**
      * Sets ACL Class
      *
