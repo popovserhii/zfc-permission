@@ -27,7 +27,7 @@
   },
   "extra": {
     "zf": {
-      "component": "Popov\\ZfcPermission",
+      "gridComponent": "Popov\\ZfcPermission",
       "config-provider": "Popov\\ZfcPermission\\ConfigProvider"
     }
   }

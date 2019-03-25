@@ -16,7 +16,6 @@ namespace Popov\ZfcPermission;
 
 use Popov\Simpler\SimplerHelper;
 use Popov\ZfcCurrent\CurrentHelper;
-//use Zend\Expressive\Helper\UrlHelper;
 use Zend\View\Helper\Url;
 use Zend\Mvc\MvcEvent as MvcEvent;
 //Zend\Permissions\Acl\Acl as Acl,
@@ -65,6 +64,11 @@ class PermissionHelper
 
     /** @var Acl */
     protected $acl = null;
+
+    /**
+     * @var User
+     */
+    protected $user;
 
     protected $roles = [];
 
@@ -123,37 +127,6 @@ class PermissionHelper
         return $this->authService;
     }
 
-
-    /*public function setUsePermission($usePermission)
-    {
-        $this->usePermission = $usePermission;
-
-        return $this;
-    }*/
-
-    /**
-     * Sets Authentication Plugin
-     *
-     * @param AuthPlugin $userAuthenticationPlugin
-     * @return $this
-     */
-    /*public function setUserAuthenticationPlugin(AuthPlugin $userAuthenticationPlugin)
-    {
-        $this->_userAuth = $userAuthenticationPlugin;
-
-        return $this;
-    }*/
-
-    /**
-     * Gets Authentication Plugin
-     *
-     * @return Authentication
-     */
-    /*public function getUserAuthenticationPlugin()
-    {
-        return $this->_userAuth;
-    }*/
-
     /**
      * Sets ACL Class
      *
@@ -188,6 +161,17 @@ class PermissionHelper
     public function getAclClass()
     {
         return $this->getAcl();
+    }
+
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
     }
 
     public function setRoles(array $roles)
@@ -319,9 +303,10 @@ class PermissionHelper
         $access = Acl::getAccess();
         $accessTotal = Acl::getAccessTotal();
 
-        $userPlugin = $this->getAuthService();
+        //$userPlugin = $this->getAuthService();
         #$user = ($userPlugin->hasIdentity() && ($user = $userPlugin->getIdentity())) ? $user : false;
-        $user = $userPlugin->getIdentity();
+        //$user = $userPlugin->getIdentity();
+        $user = $this->getUser();
 
         /** @var UserPlugin $userPlugin */
         if ($user && $user->getId()/* && $user->getIsInner()*/) {
@@ -333,8 +318,8 @@ class PermissionHelper
             // Update expire login
             $sessionAuth = new SessionContainer('Zend_Auth');
             in_array('admin', $roleMnemos)
-                ? $sessionAuth->setExpirationSeconds(60 * 60 * 24) // 24 hours
-                : $sessionAuth->setExpirationSeconds(60 * 60); // 60 minutes
+                ? $sessionAuth->setExpirationSeconds(60 * 60 * 48) // 24 hours
+                : $sessionAuth->setExpirationSeconds(60 * 60 * 24); // 60 minutes
 
             #foreach ($this->getConfig()['acl']['guest'] as $resource) {
             #    $this->acl->addResource(new GenericResource($resource['target']));
@@ -393,7 +378,7 @@ class PermissionHelper
         if ($user/* && $user->getIsInner()*/) {
             //$event->stopPropagation(true); // very important string
             //$viewModel->permissionDenied = false;
-
+            // permission denied
             return;
         } else {
             $_SESSION['location'] = [
@@ -419,7 +404,7 @@ class PermissionHelper
 
         $where = '';
         $dbAdapter = $this->getDbAdapter();
-        $user = $this->getAuthService()->getIdentity();
+        $user = $this->getUser();
 
         // Acl class
         $acl = $this->getAcl();
