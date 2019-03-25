@@ -98,7 +98,7 @@ class PermissionHelper extends AbstractHelper {
 		// fields for page
 		$fieldsPagesArray = $this->_fieldsPagesService->getFieldsByPage(''/*, 'page'*/);
 
-        //$selectedItems = $this->toArrayKeyField($fieldToArray, $selectedItems, true);
+        //$selectedReviews = $this->toArrayKeyField($fieldToArray, $selectedReviews, true);
         //$itemsPageBind = $servicePageBind->toArrayKeyField('childrenId', $itemsPageBind, true);
         $fieldsPagesArray = $simpler->setContext($fieldsPagesArray)->asAssociate('page', true);
 
